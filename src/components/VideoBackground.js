@@ -22,7 +22,7 @@ const handleURLOrID = ({ links = "#", isUrl = false }) => {
 export default () => {
   const [showDrawer, setDrawerOpen] = useState(false)
   return (
-    <div className="w-screen relative">
+    <div className="w-screen relative flex items-center">
       <Drawer
         className="sm:hidden"
         title={
@@ -59,7 +59,7 @@ export default () => {
         muted="1"
         loop="1"
         className="w-screen"
-        style={{ filter: "blur(1.5px)" }}
+        style={{ filter: "blur(1.5px)", minWidth: "150vh" }}
       >
         <source src={require("../assets/bg.mp4")} type="video/mp4" />
       </video>
@@ -88,7 +88,7 @@ export default () => {
             ghost
           />
         </div>
-        <div className="max-w-xl flex text-white flex-grow items-center justify-center text-xl my-2 mx-8 sm:text-3xl md:text-5xl font-bold text-center">
+        <div className="max-w-xl flex text-white flex-grow items-center justify-center text-2xl sm:text-3xl my-2 mx-8 md:text-5xl font-bold text-center">
           Una comunidad de Desarrolladores para Desarrolladores.
         </div>
         <img

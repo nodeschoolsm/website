@@ -1,10 +1,10 @@
 import React from "react"
 
-export default ({ children = null, id = "none" }) => {
+export default ({ children = null, id = "none", className="" }) => {
   return (
     <div
       id={id}
-      className="min-h-screen w-full p-2 md:px-40 md:py-24 flex flex-col justify-start items-center"
+      className={`${className} min-h-screen w-full p-2 md:px-40 md:py-24 flex flex-col justify-start items-center`}
     >
       {children}
     </div>

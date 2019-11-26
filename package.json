@@ -8,7 +8,6 @@
     "@babel/plugin-transform-async-to-generator": "^7.7.0",
     "@typeform/embed": "^0.15.0",
     "antd": "^3.25.2",
-    "babel-polyfill": "^6.26.0",
     "emotion": "^10.0.23",
     "gatsby": "^2.16.1",
     "gatsby-image": "^2.2.29",
