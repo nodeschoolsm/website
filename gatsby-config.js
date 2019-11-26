@@ -11,6 +11,14 @@ module.exports = {
         display: `standalone`
       }
     },
+    {
+      resolve: `gatsby-plugin-react-svg`,
+      options: {
+        rule: {
+          include: /\.component\.svg$/
+        }
+      }
+    },
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
