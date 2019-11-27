@@ -8,6 +8,6 @@ body * {
   line-height: 115%;
 }
 
-body {
+body, html {
   overflow-x: hidden !important;
 }

@@ -125,15 +125,15 @@ export default () => {
             </div>
           </Button>
         </Page>
-        <Page id="sponsors" className="border-b border-black-50 border-dashed">
-          <Title text="Sponsors y colaboradores" />
-          <p className="max-w-xl pt-2 text-xl text-center mb-12">
+        <Page id="sponsors" className="border-b border-black-50 border-dashed mt-12 sm:mt-0" >
+          <Title text="Sponsors y colaboradores"/>
+          <p className="max-w-xl pt-2 text-xl text-center mb-20">
             Desde que iniciamos la comunidad, en poco tiempo empezamos a recibir
             patrocinio y ayuda de distintas instituciones, comunidades y
             personas con las cuales estamos muy agradecidos.
           </p>
           <Sponsors />
-          <p className="max-w-xl pt-2 text-center mt-16 mb-32">
+          <p className="max-w-xl pt-2 text-center mt-56 mb-6 md:mb-0">
             Miralos en meetup:{" "}
             <a href="meetup.com/nodeschoolsm/sponsors">
               meetup.com/nodeschoolsm/sponsors
