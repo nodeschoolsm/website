@@ -10,7 +10,8 @@ import Sponsors from "../components/Sponsors"
 import useSWR from "swr"
 import { css } from "emotion"
 import { Button } from "antd"
-import siteMetaData from "../siteMetaData.js"
+import { getMetas, title } from "../siteMetaData.js"
+import Events from "../components/Events"
 const BorderBottomTitle = ({ text = "", className = "" }) => {
   return (
     <div
@@ -37,6 +38,7 @@ const BorderBottomTitle = ({ text = "", className = "" }) => {
     </div>
   )
 }
+
 const URL = `https://na9izifwg4.execute-api.us-east-1.amazonaws.com/production/api/meetup`
 export default () => {
   const { data } = useSWR(URL, url => fetch(url).then(r => r.json()), {
@@ -48,11 +50,7 @@ export default () => {
     <>
       <VideoBackground />
       <div className="flex p-8 flex-col items-center justify-center min-h-screen">
-        <Helmet title={siteMetaData.title}>
-          {Object.keys(siteMetaData).map(name => {
-            return <meta name={name} content={siteMetaData[name]} />
-          })}
-        </Helmet>
+        <Helmet title={title} children={getMetas()} />
         <Page id="about">
           <Title text="Nodeschool San Miguel" />
           <img
@@ -107,6 +105,7 @@ export default () => {
             Unas <b>casí</b> random pics de los noders
           </p>
           <Noders noders={noders} />
+
           <Button
             size="large"
             type="dashed"
@@ -125,8 +124,25 @@ export default () => {
             </div>
           </Button>
         </Page>
-        <Page id="sponsors" className="border-b border-black-50 border-dashed mt-12 sm:mt-0" >
-          <Title text="Sponsors y colaboradores"/>
+
+        <Page>
+          <Title text="Últimos eventos" />
+          <p className="max-w-xl pt-2 text-xl text-center">
+            En Nodeschool San Miguel realizamos distintos eventos{" "}
+            <em>"Nodeschool Meetups"</em>, que se ejecutan regularmente cada
+            último sábado en cada mes del año, <em>"CODEVENTS"</em> que se
+            realizán el penultimo sábado de cada trimestre, y los{" "}
+            <em>"Hack Days"</em> que se llevan a cabo en la primera semana de
+            Diciembre.
+          </p>
+          <Events />
+        </Page>
+
+        <Page
+          id="sponsors"
+          className="border-b border-black-50 border-dashed mt-12 sm:mt-0"
+        >
+          <Title text="Sponsors y colaboradores" />
           <p className="max-w-xl pt-2 text-xl text-center mb-20">
             Desde que iniciamos la comunidad, en poco tiempo empezamos a recibir
             patrocinio y ayuda de distintas instituciones, comunidades y
