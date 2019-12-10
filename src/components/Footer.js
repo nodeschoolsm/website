@@ -3,6 +3,7 @@ import Facebook from "../assets/facebook.component.svg"
 import Twitter from "../assets/twitter.component.svg"
 import Instagram from "../assets/instagram.component.svg"
 import Linkedin from "../assets/linkedin.component.svg"
+import Slack from "../assets/slack.component.svg"
 import { css } from "emotion"
 const open = url => window.open(url, "_blank")
 const LINKS = [
@@ -68,6 +69,12 @@ export default () => {
             }
             fill="white"
             width="29px"
+            style={{ margin: "4px 0" }}
+          />
+          <Slack
+            onClick={() => open("http://slack.nodeschoolsm.io")}
+            fill="white"
+            width="28px"
             style={{ margin: "4px 0" }}
           />
           <Instagram

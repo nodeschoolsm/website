@@ -10,8 +10,9 @@ export default ({ photos = [] }) => {
         visible={viewModal}
         footer={null}
         children={
-          <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
             <img src={image} />
+            <a children="Mirar album completo" href="https://www.meetup.com/nodeschoolsm/photos/" target="_blank" className="pt-4"/>
           </div>
         }
         onCancel={() => showModal(false)}

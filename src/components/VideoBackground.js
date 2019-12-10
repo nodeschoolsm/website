@@ -9,6 +9,10 @@ const menuContent = [
     label: "Sponsors",
     links: "#sponsors"
   },
+  {
+    label: "Eventos",
+    links: "#events"
+  },
   { label: "Blog", links: "http://blog.nodeschoolsm.io", isUrl: true },
   { label: "Contacto", links: "#contact" }
 ]

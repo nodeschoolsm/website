@@ -10,6 +10,7 @@ import Sponsors from "../components/Sponsors"
 import useSWR from "swr"
 import { css } from "emotion"
 import { Button } from "antd"
+import Slack from "../assets/slack.component.svg"
 import { getMetas, title } from "../siteMetaData.js"
 import Events from "../components/Events"
 const BorderBottomTitle = ({ text = "", className = "" }) => {
@@ -87,6 +88,16 @@ export default () => {
             series de eventos, retos, charlas y talleres para la comunidad de
             desarrolladores en El Salvador.
           </p>
+          <div
+            onClick={() =>
+              window.open("http://slack.nodeschoolsm.io", "_blank")
+            }
+            style={{ background: "rgba(0,0,0,.07)" }}
+            className="py-4 px-8 flex items-center justify-center cursor-pointer hover:shadow mt-8 rounded font-bold text-black text-xl"
+          >
+            <Slack width="30px" />
+            <span className="ml-1">Unete al slack de la comunidad</span>
+          </div>
         </Page>
         <Gallery photos={[...photos].splice(0, 6)} />
         <Page id="noders">
@@ -125,7 +136,7 @@ export default () => {
           </Button>
         </Page>
 
-        <Page>
+        <Page id="events">
           <Title text="Últimos eventos" />
           <p className="max-w-xl pt-2 text-xl text-center">
             En Nodeschool San Miguel realizamos distintos eventos{" "}
