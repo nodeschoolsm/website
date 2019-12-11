@@ -93,10 +93,10 @@ export default () => {
               window.open("http://slack.nodeschoolsm.io", "_blank")
             }
             style={{ background: "rgba(0,0,0,.07)" }}
-            className="py-4 px-8 flex items-center justify-center cursor-pointer hover:shadow mt-8 rounded font-bold text-black text-xl"
+            className="p-4 md:px-8 flex items-center justify-center cursor-pointer hover:shadow mt-8 rounded font-bold text-black md:text-xl"
           >
             <Slack width="30px" />
-            <span className="ml-1">Unete al slack de la comunidad</span>
+            <span className="ml-1 text-center">Unete al slack de la comunidad</span>
           </div>
         </Page>
         <Gallery photos={[...photos].splice(0, 6)} />

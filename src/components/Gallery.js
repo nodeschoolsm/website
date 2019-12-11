@@ -11,8 +11,14 @@ export default ({ photos = [] }) => {
         footer={null}
         children={
           <div className="flex flex-col items-center justify-center">
-            <img src={image} />
-            <a children="Mirar album completo" href="https://www.meetup.com/nodeschoolsm/photos/" target="_blank" className="pt-4"/>
+            <img src={image} alt="Cargando..." />
+            <a
+              rel="noopener noreferrer"
+              children="Mirar album completo"
+              href="https://www.meetup.com/nodeschoolsm/photos/"
+              target="_blank"
+              className="pt-4"
+            />
           </div>
         }
         onCancel={() => showModal(false)}

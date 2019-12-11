@@ -41,7 +41,7 @@ export default () => {
         }}
         onClose={() => setDrawerOpen(false)}
         children={
-          <div className="min-h-full">
+          <div className="min-h-full min-w-full">
             {menuContent.map(({ label, ...props }) => {
               return (
                 <div
