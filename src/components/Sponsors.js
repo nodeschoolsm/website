@@ -9,18 +9,31 @@ export default () => {
 
   return (
     <div className="flex flex-wrap w-full">
-      {data.map(({ title, pic, description }) => {
+      {data.map(({ title, pic, description, link = "#" }) => {
         return (
-          <div className="flex h-24 md:h-16 w-full lg:w-1/2 p-2">
+          <div className="flex w-full lg:w-1/2 p-2">
             <div
-              className="flex items-center pr-2"
-              style={{ minWidth: "10rem" }}
+              onClick={() => window.open(link, "_blank")}
+              className="flex p-4 w-full justify-center items-center shadow hover:shadow-md cursor-pointer"
             >
-              <img src={pic} alt={title} style={{ width: "6rem" }} />
-            </div>
-            <div className="flex flex-col justify-center flex-grow">
-              <div className="xl:text-xl font-bold">{title}</div>
-              <div className="text-sm xl:text-base">{description}</div>
+              <div
+                className="pr-4 flex items-center"
+                style={{ maxHeight: "3rem", maxWidth: "6rem" }}
+              >
+                <img
+                  src={pic}
+                  alt={title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain"
+                  }}
+                />
+              </div>
+              <div className="flex flex-col justify-center flex-grow lg:text-center">
+                <div className="xl:text-xl font-bold">{title}</div>
+                <div className="text-sm xl:text-base">{description}</div>
+              </div>
             </div>
           </div>
         )

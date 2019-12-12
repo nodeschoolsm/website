@@ -100,7 +100,7 @@ export default () => {
           </div>
         </Page>
         <Gallery photos={[...photos].splice(0, 6)} />
-        <Page id="noders">
+        <Page id="noders" className="border-b border-dashed mb-4 lg:mb-0 pb-4">
           <Title text="NODERS" />
 
           <p className="max-w-xl pt-2 text-xl text-center">
