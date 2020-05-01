@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap");
+html,
+body {
+  overflow-x: hidden;
+}
+* {
+  position: relative;
+  scrollbar-width: thin;
+  transition: all 0.09s ease-in-out;
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.1;
+}
+nav {
+  transition: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+h1 {
+  @apply font-bold text-4xl mb-4 mt-16;
+}
+h2 {
+  @apply font-bold text-3xl mb-3 mt-12;
+}
+h3 {
+  @apply font-bold text-2xl mb-3 mt-12;
+}
+h4 {
+  @apply font-bold text-2xl mb-2 mt-8;
+}
+p {
+  @apply text-lg max-w-3xl my-2;
+}
+hr {
+  @apply border-dark-15 my-4;
+}
+a {
+  @apply border-b-2 border-transparent;
+}
+a:hover {
+  @apply border-yellow;
+}
+particle {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+}
+#particles {
+  cursor: url("./image/pointer.png"), pointer;
+}
+.marquee {
+  animation: marquee 20s linear infinite alternate;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(1rem);
+  }
+  to {
+    transform: translateX(-94rem);
+  }
+}
+.burguer:hover > * {
+  min-width: 100%;
+  margin-bottom: 0.4rem;
+  transform: scale(1.2);
+}
+.menu a {
+  opacity: 0;
+  transition: opacity 0.65s ease-in-out;
+}
+.menu {
+  width: 0rem;
+  transition: width 0.35s cubic-bezier(0.86, 0, 0.07, 1);
+}
+#nav.open .menu {
+  visibility: visible;
+  width: 20rem;
+}
+#nav.open a {
+  opacity: 1;
+}
+
+/* * BLOG POSTS STYLES */
+.post *,
+.blog * {
+  font-family: "Open Sans", sans-serif;
+}
+.post {
+  @apply flex flex-col items-center max-w-4xl w-full;
+}
+.post h1,
+.post h2,
+.post h3 {
+  max-width: 52rem;
+  @apply w-full border-b pb-8 pt-2 border-dark-10;
+}
+@screen lg {
+  .post h1,
+  .post h2,
+  .post h3 {
+    @apply px-8;
+  }
+}
+.post p {
+  @apply w-full text-lg leading-6 text-dark-85;
+}
+ol,
+ul {
+  @apply max-w-3xl w-full mb-4 mt-1 text-dark-85;
+}
+li {
+  list-style-position: inside;
+  @apply my-2 ml-4;
+}
+ol li {
+  list-style-type: decimal;
+}
+ul li {
+  list-style-type: disc;
+}
+li::marker {
+  font-weight: bold;
+}
+.post a::before {
+  content: "🔗 ";
+  @apply text-sm;
+}
+.post pre {
+  width: 100%;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 1rem;
+  max-width: 50rem;
+  margin: 1rem 0;
+}
+.post iframe {
+  width: 100%;
+  overflow: auto;
+  max-width: 50rem;
+  margin: 1rem 0;
+  min-height: 420px;
+}
+@screen lg{
+  .post iframe {
+    min-height: 480px;
+  }
+}
+.post img {
+  margin: 1rem auto;
+}
+.post a {
+  @apply italic text-black;
+}
+@keyframes nothing {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

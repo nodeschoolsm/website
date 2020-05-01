@@ -1,2 +1,2 @@
-import "./src/assets/css/index.css"
-import "antd/dist/antd.css"
+import "prismjs/themes/prism.css"
+import "./src/assets/styles.css"
