@@ -15,6 +15,9 @@ module.exports = {
     extend: {
       width: pxHelpers,
       height: pxHelpers,
+      zIndex: {
+        1: 1,
+      },
     },
     colors: {
       white: "white",

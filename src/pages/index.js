@@ -1,23 +1,20 @@
 import React from "react"
-import {
-  ArrowUpOutlined,
-  InstagramOutlined,
-  GithubOutlined,
-  FacebookFilled,
-  TwitterOutlined,
-  LinkedinFilled,
-} from "@ant-design/icons"
+import Footer from "../components/footer"
+import Burguer from "../components/burguer"
+import Marquee from "../components/marquee"
 const logo = require("../assets/image/logo.png")
 export default () => {
   const videoHeight = "calc(100vh + 5rem)"
   const sliderWidth = "12rem"
   const minNavHeight = "100vh - 13rem"
-  const isDesktop = window.innerWidth > 600
+  let isDesktop = false
+  if (typeof window != "undefined") {
+    isDesktop = window.innerWidth > 600
+  }
   return (
     <div
       onScroll={e => {
         const currentScroll = e.target.scrollTop
-
         window.nav.style.height = `calc(${minNavHeight} - ${
           currentScroll * 0.6
         }px)`
@@ -74,63 +71,15 @@ export default () => {
           <b className="uppercase text-xl w-full text-center mt-4">
             Nodeschool San Miguel
           </b>
-          <nav
-            id="nav"
-            style={{ minHeight: "3.75rem", height: `calc(${minNavHeight})` }}
-            className="absolute bg-black right-0 w-16 -mr-6 mt-56 flex justify-center"
-          >
-            <div
-              className="mt-4 burguer h-6 z-10 cursor-pointer"
-              onClick={() => {
-                window.nav.classList.toggle("open")
-              }}
-            >
-              <div className="w-6 bg-white my-1 h-3px" />
-              <div className="w-6 bg-white my-1 h-3px" />
-              <div className="w-5 bg-white my-1 h-3px" />
-            </div>
-            <div
-              style={{ minHeight: "22rem" }}
-              className="absolute bg-black menu invisible top-0 left-0 bottom-0"
-            >
-              <div className="overflow-x-hidden text-right overflow-y-auto px-8 flex flex-col text-xl font-bold items-end justify-end h-full text-white py-16">
-                <a href="#">
-                  Nodeschool - Meetups
-                  <span className="text-xs font-light uppercase italic">
-                    /Evento
-                  </span>
-                </a>
-                <a href="#">
-                  Open Hack Day
-                  <span className="text-xs font-light uppercase italic">
-                    /Evento
-                  </span>
-                </a>
-                <a href="#">
-                  NerdTalk
-                  <span className="text-xs font-light uppercase italic">
-                    /Evento
-                  </span>
-                </a>
-                <a href="#">
-                  WebSummit
-                  <span className="text-xs font-light uppercase italic">
-                    /Evento
-                  </span>
-                </a>
-                <a href="#">
-                  CODEVENT
-                  <span className="text-xs font-light uppercase italic">
-                    /Evento
-                  </span>
-                </a>
-                <a href="#">Speakers</a>
-                <a href="#">Sponsors</a>
-                <a href="#">Blog</a>
-                <div className="bg-light-90 w-full h-1px mt-4" />
-              </div>
-            </div>
-          </nav>
+          <Burguer
+            className="absolute bg-black right-0 w-16 -mr-6 flex justify-center"
+            style={{
+              minHeight: "3.75rem",
+              height: `calc(${minNavHeight})`,
+              paddingTop: 0,
+              marginTop: "16rem",
+            }}
+          />
         </div>
         <div className="flex-grow" style={{ minHeight: videoHeight }}>
           <div className="bg-yellow h-2 w-8 absolute top-0 right-0 z-10 mt-4"></div>
@@ -212,12 +161,7 @@ export default () => {
           </div>
         </div>
       </div>
-      <div
-        style={{ fontSize: "13rem" }}
-        className="bg-yellow py-4 font-black uppercase flex items-center whitespace-no-wrap"
-      >
-        <span className="marquee">San Miguel, El Salvador</span>
-      </div>
+      <Marquee>SAN MIGUEL, EL SALVADOR</Marquee>
       <div className="bg-dark-95 flex justify-center">
         <form className="flex flex-col p-6 my-32 w-full max-w-xl text-white">
           <h2>Contactanos</h2>
@@ -255,59 +199,7 @@ export default () => {
           />
         </form>
       </div>
-      <div className="bg-black text-white px-6 pb-12 flex flex-col items-center">
-        <div className="flex justify-between text-sm sm:text-xs w-full max-w-3xl my-8 flex-wrap sm:flex-no-wrap">
-          {[
-            "Código de conducta",
-            "FAQ",
-            "Mentions & Milestones",
-            "Organizadores",
-            "Merch",
-          ].map((text, index) => {
-            return [
-              index ? <i className="hidden sm:block">•</i> : null,
-              <a
-                href="#"
-                className="w-full my-1 sm:m-0 sm:w-auto mx-1 text-white uppercase"
-              >
-                {text}
-              </a>,
-            ]
-          })}
-        </div>
-        <div className="w-11/12 xl:w-6/12 border-t border-light-10" />
-        <div className="flex w-11/12 xl:w-6/12 text-base mt-4 mb-6 justify-end">
-          <LinkedinFilled />
-          <div className="mx-1"></div>
-          <InstagramOutlined />
-          <div className="mx-1"></div>
-          <TwitterOutlined />
-          <div className="mx-1"></div>
-          <FacebookFilled />
-          <div className="mx-1"></div>
-          <GithubOutlined />
-        </div>
-      </div>
-      <div className="bg-black flex items-end">
-        <div className="sm:w-20 h-20" />
-        <div className="flex-grow justify-center flex items-end">
-          <img
-            className="h-16 sm:h-20"
-            src={require("../assets/image/OKC - light.png")}
-            alt=""
-          />
-          <div className="h-20 bg-light-05 mx-4 w-1px"></div>
-          <img
-            className="h-16 sm:h-20"
-            src={require("../assets/image/OKC-L.png")}
-            alt=""
-          />
-        </div>
-
-        <div className="w-20 h-20 cursor-pointer hover:bg-light-90 bg-white hidden sm:flex items-center justify-center">
-          <ArrowUpOutlined className="text-2xl" />
-        </div>
-      </div>
+      <Footer />
     </div>
   )
 }
