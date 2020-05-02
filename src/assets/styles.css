@@ -127,14 +127,12 @@ li::marker {
   font-weight: bold;
 }
 .post pre {
-  @apply overflow-auto w-full my-4 p-4;
+  @apply overflow-auto w-full my-4 p-4 max-w-3xl;
   background: rgba(0, 0, 0, 0.03);
-  max-width: 48rem;
 }
 .post iframe {
-  @apply w-full my-4 overflow-auto shadow-xl;
-  max-width: 48rem;
-  min-height: 420px;
+  @apply w-full my-4 overflow-auto shadow-xl max-w-3xl;
+  min-height: 400px;
 }
 @screen lg {
   .post iframe {
@@ -153,8 +151,7 @@ li::marker {
   padding: 0 2px;
 }
 .post table {
-  @apply table-auto w-full text-left my-4 p-4;
-  max-width: 48rem;
+  @apply table-auto w-full text-left my-4 p-4 max-w-3xl;
 }
 .post th,
 .post td {
@@ -166,4 +163,12 @@ li::marker {
 p code{
   @apply bg-dark-05 font-sans text-black;
   padding: 0 2px;
+}
+.post blockquote{
+  @apply w-full max-w-3xl bg-dark-05 border-l-4;
+  border-color: #2d7ff9
+}
+blockquote p{
+  @apply px-4 py-6;
+  margin-left: -4px;
 }

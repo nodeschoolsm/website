@@ -10,9 +10,12 @@ import {
   TwitterOutlined,
   LinkedinFilled,
 } from "@ant-design/icons"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
+import coverDefault from "../assets/image/cover.jpg"
+import profileDefault from "../assets/image/social.svg"
 const Prism = require("prismjs")
 const cheerio = require("cheerio")
+
 export const template = `pageContext: {
   childMarkdownRemark {
     timeToRead
@@ -77,7 +80,7 @@ export default ({ pageContext }) => {
         return $(e)
           .parent("pre")
           .replaceWith(
-            `<iframe width="100%" height="460" src="${code}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+            `<iframe width="100%" height="460" src="${code}" frameborder="0" allow="same-origin; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; scripts" allowfullscreen></iframe>`
           )
       }
       let grammar = Prism.languages.markup
@@ -100,19 +103,58 @@ export default ({ pageContext }) => {
       $(e).html(html)
     })
 
+  const { timeToRead = 0 } = pageContext.childMarkdownRemark
+  const { createdTime = "2020" } = pageContext.document
+  const title = (() => {
+    const node = $("h1")
+    let text = node.html()
+    if (text) {
+      node.remove()
+      return text
+    }
+    return "TITULO"
+  })()
+  const cover = (() => {
+    const node = $("img")
+    if (node) {
+      const URL = node.attr("src")
+      node.closest("p").remove()
+      return URL
+    }
+    return coverDefault
+  })()
+  const frontmatter = (() => {
+    let state = {}
+    ;[...$("pre code").toArray()]
+      .filter(e => {
+        return !e.attribs.class
+      })
+      .map(e => {
+        const config = $(e).html().trim().split("\n")
+        $(e).remove()
+        return config.map(item => {
+          const [head = "", content = ""] = item.split(":")
+          const prop = head.trim().toLowerCase()
+          if (content.includes(",")) {
+            state[prop] = content.split(",").map(e => e.trim())
+          } else {
+            state[prop] = content.trim()
+          }
+        })
+      })
+    return state
+  })()
+  const { tags = [] } = frontmatter
   return (
     <div
       onScroll={e => {
         window.postCover.style.opacity =
-          0.22 + e.currentTarget.scrollTop / window.innerHeight
+          0.3 + e.currentTarget.scrollTop / window.innerHeight
       }}
       className="w-full max-h-screen overflow-x-hidden overflow-y-auto"
     >
       <Helmet>
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
-        />
+        <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
       <nav className="fixed top-0 left-0 z-20">
         <Burguer />
@@ -123,26 +165,24 @@ export default ({ pageContext }) => {
           className="w-full overflow-hidden flex items-end"
           style={{ height: "66vh", minHeight: "16rem" }}
         >
-          <div className="absolute text-light-70 top-0 text-xs right-0 z-1 pr-4 pt-4">
-            Febrero 3, 2020, <b>7min</b>
+          <div className="absolute text-light-65 top-0 text-xs right-0 z-10 pr-4 pt-4">
+            {createdTime[0].toUpperCase() + createdTime.substr(1)},{" "}
+            <b>{timeToRead}min</b>
           </div>
           <div
             id="postCover"
-            className="absolute inset-0 bg-black z-1 opacity-25"
+            className="absolute inset-0 bg-black z-1"
+            style={{ opacity: 0.3 }}
           />
-          <img
-            className="w-full h-full object-cover"
-            src="http://localhost:8000/static/7bd3fa5139c081adb38b63cf6805ffe1/6aca1/google-docs-image-eaeec629-8c45-5b68-9751-8a962d47cad2.jpg"
-            alt=""
-          />
+          <img className="w-full h-full object-cover" src={cover} alt="cover" />
         </div>
 
         <div className="p-8 lg:p-16 max-w-4xl mx-auto">
-          <h1 className="uppercase lg:text-5xl m-0">LOCAL HACK DAY 2019</h1>
+          <h1 className="uppercase lg:text-5xl m-0">{title}</h1>
           <div className="flex flex-wrap mt-4">
-            {[...Array(5)].map((_, i) => (
-              <span className="px-2 rounded bg-dark-05 text-dark-45 py-1 text-xs  font-bold m-1">
-                hack-day {i}
+            {tags.map(text => (
+              <span className="px-2 cursor-pointer rounded bg-dark-05 text-dark-45 py-1 text-xs  font-bold m-1">
+                {text}
               </span>
             ))}
           </div>
@@ -198,8 +238,8 @@ export default ({ pageContext }) => {
             </div>
           </div>
           <img
-            className="object-cover shadow rounded -mt-8 mb-3 mt-16 h-40 h-40"
-            src="http://localhost:8000/static/e0daa1e7ab311a5e473489ec76e2aa49/a6d36/google-docs-image-0b6deb4f-32b3-5309-9ff3-e096e17256e8.png"
+            className="object-cover shadow rounded -mt-8 mb-3 mt-16 h-40 h-40 bg-white"
+            src={profileDefault}
             alt=""
           />
         </div>
