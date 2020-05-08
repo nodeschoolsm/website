@@ -28,6 +28,8 @@ module.exports = {
       light,
     },
   },
-  variants: {},
+  variants: {
+    fontSize: ["responsive", "hover", "focus", "group-hover"],
+  },
   plugins: [],
 }

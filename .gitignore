@@ -70,3 +70,4 @@ yarn-error.log
 yarn.lock
 .google
 package-lock.json
+dist/

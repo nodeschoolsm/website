@@ -11,21 +11,35 @@ export default ({ className = "" }) => {
   return (
     <>
       <div
-        className={`bg-black text-white px-6 pb-12 flex flex-col items-center ${className}`}
+        className={`bg-black text-white px-6 pb-12 flex flex-col items-center w-full ${className}`}
       >
         <div className="flex justify-between text-sm sm:text-xs w-full max-w-3xl my-8 flex-wrap sm:flex-no-wrap">
           {[
-            "Home",
-            "Código de conducta",
-            "FAQ",
-            "Mentions",
-            "Organizadores",
-            "Merch",
-          ].map((text, index) => {
+            ["Home", "/"],
+            [
+              "Código de conducta",
+              "https://github.com/nodeschoolsm/about/blob/master/CoC.md",
+              "_blank",
+            ],
+            [
+              "FAQ",
+              "https://github.com/nodeschoolsm/about/blob/master/FAQ.md",
+              "_blank",
+            ],
+            ["Mentions", "/mentions"],
+            ["Organizadores", "/organizadores"],
+            ["Merch", "/merch"],
+          ].map(([text, url = "#", target = "_self"], index) => {
             return [
-              index ? <i className="hidden sm:block">•</i> : null,
+              index ? (
+                <i className="hidden sm:block" key={`${url}-${text}-dot`}>
+                  •
+                </i>
+              ) : null,
               <a
-                href="#"
+                key={`${url}-${text}`}
+                href={url}
+                target={target}
                 className="w-full my-1 sm:m-0 sm:w-auto mx-1 text-white uppercase"
               >
                 {text}
@@ -35,15 +49,28 @@ export default ({ className = "" }) => {
         </div>
         <div className="w-11/12 xl:w-6/12 border-t border-light-10" />
         <div className="flex w-11/12 xl:w-6/12 text-base mt-4 mb-6 justify-end">
-          <LinkedinFilled />
+          <a
+            target="_blank"
+            href="https://linkedin.com/company/nodeschool-san-miguel"
+          >
+            <LinkedinFilled />
+          </a>
           <div className="mx-1"></div>
-          <InstagramOutlined />
+          <a target="_blank" href="https://instagram.com/nodeschoolsm">
+            <InstagramOutlined />
+          </a>
           <div className="mx-1"></div>
-          <TwitterOutlined />
+          <a target="_blank" href="https://twitter.com/nodeschoolsm">
+            <TwitterOutlined />
+          </a>
           <div className="mx-1"></div>
-          <FacebookFilled />
+          <a target="_blank" href="https://facebook.com/nodeschoolsm">
+            <FacebookFilled />
+          </a>
           <div className="mx-1"></div>
-          <GithubOutlined />
+          <a target="_blank" href="https://github.com/nodeschoolsm">
+            <GithubOutlined />
+          </a>
         </div>
       </div>
       <div className="bg-black flex items-end">
@@ -55,11 +82,13 @@ export default ({ className = "" }) => {
             alt=""
           />
           <div className="h-20 bg-light-05 mx-4 w-1px"></div>
-          <img
-            className="h-16 sm:h-20"
-            src={require("../assets/image/OKC-L.png")}
-            alt=""
-          />
+          <a target="_blank" href="https://github.com/openkc">
+            <img
+              className="h-16 sm:h-20"
+              src={require("../assets/image/OKC-L.png")}
+              alt=""
+            />
+          </a>
         </div>
 
         <div

@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/pages/blog/index.js"],"names":["className"],"mappings":"2FAAA,gCAEe,qBACb,OAAO,yBAAKA,UAAU,gCAAf","file":"component---src-pages-blog-index-js-c28d1f721feb2678eff9.js","sourcesContent":["import React from \"react\"\n\nexport default () => {\n  return <div className=\"bg-yellow text-2xl font-bold\">awd</div>\n}\n"],"sourceRoot":""}

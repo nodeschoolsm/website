@@ -4,7 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap");
 html,
 body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 * {
   position: relative;
@@ -19,7 +19,8 @@ body {
   display: none;
 }
 h1 {
-  @apply font-bold text-4xl mb-4 mt-16;
+  font-size: 2rem;
+  @apply font-bold mb-4 mt-16;
 }
 h2 {
   @apply font-bold text-3xl mb-3 mt-12;
@@ -29,7 +30,7 @@ h3 {
 }
 h4 {
   @apply font-bold mb-2 mt-8;
-  font-size: 1.36rem
+  font-size: 1.36rem;
 }
 p {
   @apply text-lg max-w-3xl my-2;
@@ -46,6 +47,15 @@ a:hover {
 #particles {
   cursor: url("./image/pointer.png"), pointer;
 }
+particle {
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  transition: none !important;
+  pointer-events: none;
+  border-radius: 100%;
+}
 .marquee {
   animation: marquee 20s linear infinite alternate;
 }
@@ -59,7 +69,7 @@ a:hover {
 }
 .burguer:hover > * {
   min-width: 100%;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.27rem;
   transform: scale(1.2);
 }
 .menu > div {
@@ -69,7 +79,7 @@ a:hover {
   width: 0rem;
   transition: width 0.35s ease-in-out;
 }
-#nav {
+#nav, #video {
   transition: none;
 }
 #nav.open .menu {
@@ -83,10 +93,10 @@ a:hover {
 
 /* * BLOG POSTS STYLES */
 .post * {
-  @apply font-sans
+  @apply font-sans;
 }
 .post {
-  @apply flex flex-col items-center max-w-4xl w-full px-8 mx-auto text-dark-85;
+  @apply flex flex-col items-center max-w-4xl w-full px-6 mx-auto text-dark-90 pb-40;
 }
 .post h1,
 .post h2,
@@ -103,7 +113,7 @@ a:hover {
   .post h2,
   .post h3,
   .post h4 {
-    @apply px-8;
+    @apply px-6;
   }
 }
 .post p {
@@ -111,7 +121,7 @@ a:hover {
 }
 ol,
 ul {
-  @apply max-w-3xl w-full mb-4 mt-1 text-dark-85;
+  @apply max-w-3xl w-full mb-4 mt-1 text-dark-90;
 }
 li {
   list-style-position: inside;
@@ -147,7 +157,7 @@ li::marker {
 }
 .post a {
   @apply italic text-black;
-  background: rgba(255,222,0, .13);
+  background: rgba(255, 222, 0, 0.13);
   padding: 0 2px;
 }
 .post table {
@@ -160,15 +170,81 @@ li::marker {
 .post th {
   @apply bg-dark-05 text-lg;
 }
-p code{
-  @apply bg-dark-05 font-sans text-black;
+.post p > code {
+  font-family: serif, sans-serif;
+  @apply bg-dark-05 text-black;
   padding: 0 2px;
 }
-.post blockquote{
+.post blockquote {
   @apply w-full max-w-3xl bg-dark-05 border-l-4;
-  border-color: #2d7ff9
+  border-color: #2d7ff9;
 }
-blockquote p{
+blockquote p {
   @apply px-4 py-6;
   margin-left: -4px;
+}
+.post.hider {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  @apply h-48 w-full min-w-full z-1 absolute bottom-0 pb-4;
+}
+.gradient-white-to-bottom {
+  background: linear-gradient(to bottom, white 0%, rgba(0, 0, 0, 0) 90%);
+}
+/* Table of contents */
+.toc {
+  min-width: 12rem;
+  max-width: 12rem;
+  display: none;
+  margin-top: 7.5rem;
+  @apply py-4 px-2 border-l border-dark-15 mr-1;
+}
+@media all and (min-width: 70.7rem) {
+  .toc {
+    display: block;
+  }
+}
+.toc li {
+  @apply flex flex-col my-0;
+}
+.toc li::after {
+  content: "-";
+  @apply text-dark-10 text-lg -mt-4;
+}
+.toc ul {
+  @apply mb-2;
+}
+.toc .content * {
+  font-size: 11px;
+  @apply text-dark-65 font-sans;
+}
+.toc li > ul {
+  @apply border-l border-dark-10;
+}
+.toc ul > li > p > a,
+.toc > ul > li > a {
+  @apply text-dark-80;
+}
+.toc a {
+  @apply bg-white;
+}
+.toc a:hover {
+  @apply text-dark-90;
+}
+.toc ul,
+.toc p {
+  @apply mt-0;
+}
+/* INPUTS */
+input:invalid,
+textarea:invalid {
+  box-shadow: none;
+}
+input:focus:invalid,
+textarea:focus:invalid {
+  box-shadow: inset 0 0 6px rgba(255, 0, 0, 0.15);
+  outline: 1px rgba(255, 0, 0, 0.4) dotted;
 }

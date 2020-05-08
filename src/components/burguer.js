@@ -4,6 +4,10 @@ export default ({ style = {}, className = "" }) => {
   return (
     <div
       id="nav"
+      tabIndex="0"
+      onBlur={() => {
+        window.nav.classList.remove("open")
+      }}
       style={style}
       className={`bg-black flex justify-center w-16 h-16 pt-1 ${className}`}
     >
@@ -26,40 +30,48 @@ export default ({ style = {}, className = "" }) => {
           className="overflow-x-hidden text-right overflow-y-auto px-8 flex flex-col text-xl font-bold items-end h-full text-white"
         >
           <div className="flex-grow"></div>
-          <a href="#" className="my-2px">Homepage</a>
-          <a href="#" className="my-2px">
+          <a href="/" className="my-2px" target="_self">
+            Homepage
+          </a>
+          <a href="/eventos/meetups" className="my-2px">
             Nodeschool - Meetups
             <span className="text-xs font-light uppercase italic">
               /Eventos
             </span>
           </a>
-          <a href="#" className="my-2px">
+          <a href="/eventos/open-hack-day" className="my-2px">
             Open Hack Day
             <span className="text-xs font-light uppercase italic">
               /Eventos
             </span>
           </a>
-          <a href="#" className="my-2px">
+          <a href="/eventos/nerd-talk" className="my-2px">
             NerdTalk
             <span className="text-xs font-light uppercase italic">
               /Eventos
             </span>
           </a>
-          <a href="#" className="my-2px">
+          <a href="/eventos/web-summit" className="my-2px">
             WebSummit
             <span className="text-xs font-light uppercase italic">
               /Eventos
             </span>
           </a>
-          <a href="#" className="my-2px">
+          <a href="/eventos/codevent" className="my-2px">
             CODEVENT
             <span className="text-xs font-light uppercase italic">
               /Eventos
             </span>
           </a>
-          <a href="#" className="my-2px">Speakers</a>
-          <a href="#" className="my-2px">Sponsors</a>
-          <a href="#" className="my-2px">Blog</a>
+          <a href="/speakers" className="my-2px">
+            Speakers
+          </a>
+          <a href="/sponsors" className="my-2px">
+            Sponsors
+          </a>
+          <a href="/blog" className="my-2px">
+            Blog
+          </a>
           <div className="bg-light-90 w-full h-1px mt-4" />
         </div>
       </div>
