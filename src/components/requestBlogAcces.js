@@ -20,7 +20,7 @@ export default () => {
       </p>
       <p className="mx-auto px-6 mt-10 lg:mt-0">
         <form
-          netlify="true"
+          data-netlify="true"
           name="request-blog-access"
           target="_self"
           action="/form-submitted"

@@ -192,7 +192,7 @@ export default () => {
           action="/form-submitted"
           target="_self"
           name="contact-us"
-          netlify="true"
+          data-netlify="true"
           className="flex flex-col p-6 my-32 w-full max-w-xl text-white"
         >
           <h2>Contactanos</h2>
