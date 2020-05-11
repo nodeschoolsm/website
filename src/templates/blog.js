@@ -10,6 +10,7 @@ import {
   AlertOutlined,
   ControlOutlined,
 } from "@ant-design/icons"
+import Seo from "../components/seo"
 const items = {
   tag:
     "px-2 select-none hover:shadow-lg hover:text-dark-70 flex items-center cursor-pointer rounded bg-dark-05 text-dark-55 py-1 text-xs font-bold",
@@ -55,7 +56,10 @@ export default ({ pageContext = {} }) => {
       <Helmet>
         <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
-
+      <Seo
+        title="Blog | Nodeschool San Miguel"
+        image="https://nodeschoolsm.io/SEO_BLOG.jpg"
+      />
       <section className="w-full bg-white">
         <Nav />
         <div className="mx-auto max-w-3xl px-6 font-bold mb-2 mt-6 flex items-center space-x-1">
