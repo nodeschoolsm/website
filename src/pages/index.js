@@ -190,7 +190,6 @@ export default () => {
         <form
           method="POST"
           action="/form-submitted"
-          target="_self"
           name="contact-us"
           data-netlify="true"
           className="flex flex-col p-6 my-32 w-full max-w-xl text-white"
