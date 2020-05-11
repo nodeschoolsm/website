@@ -2,9 +2,9 @@ import React from "react"
 import Footer from "../components/footer"
 import Burguer from "../components/burguer"
 import Marquee from "../components/marquee"
-import { EyeOutlined, ReadOutlined } from "@ant-design/icons"
+import Seo from "../components/seo"
+import { ReadOutlined } from "@ant-design/icons"
 import { DiscussionEmbed } from "disqus-react"
-import { Helmet } from "react-helmet"
 import Socials from "../components/socials"
 export default ({ pageContext = {}, path }) => {
   const { profile = {}, frontmatter = {}, username = "" } = pageContext
@@ -15,6 +15,7 @@ export default ({ pageContext = {}, path }) => {
     cover,
     content,
     createdTime,
+    description,
     toc,
   } = frontmatter
   const voidContentTemplate = `
@@ -23,7 +24,7 @@ export default ({ pageContext = {}, path }) => {
     El autor esta entrada no ha agregado contenido aún :(<br/>
     Mientras esperas peudes ver las demás entradas del autor <a href="/blog/${username}">acá.</a>
   </p>
-  <img src="/paper-plane.svg" alt="empty" class="w-full pt-32 opacity-50" style="max-width: 14rem"/>
+  <img src="/paper-plane.svg" alt="empty" class="w-full pt-32 opacity-50 lg:pr-16" style="max-width: 12rem"/>
   `
   const contentToRender =
     content == `<html><head></head><body></body></html>`
@@ -41,6 +42,7 @@ export default ({ pageContext = {}, path }) => {
       }}
       className="w-full max-h-screen overflow-x-hidden overflow-y-auto"
     >
+      <Seo title={title} image={cover} description={description} />
       <nav className="absolute top-0 left-0 z-20" id="top">
         <Burguer />
       </nav>
@@ -62,7 +64,7 @@ export default ({ pageContext = {}, path }) => {
         </div>
 
         <div className="px-6 py-8 lg:p-16 max-w-6xl mx-auto">
-          <h1 className="uppercase lg:text-5xl m-0 font-sans">{title}</h1>
+          <h1 className="uppercase text-5xl m-0 font-sans">{title}</h1>
           <div className="flex flex-wrap mt-4">
             {tags.map(text => (
               <span className="px-2 font-sans cursor-default rounded bg-dark-05 text-dark-45 py-1 text-xs  font-bold m-1">
@@ -73,7 +75,7 @@ export default ({ pageContext = {}, path }) => {
         </div>
       </div>
 
-      <div className="bg-dark-20 h-1px mt-6" />
+      <div className="mt-6 w-full border-t border-dashed border-dark-10" />
       <div className="flex mt-4 lg:mt-24">
         <div
           className="post"
@@ -104,7 +106,7 @@ export default ({ pageContext = {}, path }) => {
         </div>
       </div>
 
-      <div id="author" className="flex border-b border-t border-dark-10">
+      <div id="author" className="flex border-t border-dark-10">
         <div className="max-w-4xl mx-auto flex w-full px-6 lg:px-16 z-10">
           <div
             style={{ minWidth: "50%" }}
@@ -127,7 +129,7 @@ export default ({ pageContext = {}, path }) => {
         </div>
       </div>
       <div
-        className="pt-32 min-h-screen flex items-center justify-center pb-10"
+        className="pt-32 border-t border-dark-05 border-dashed border-b min-h-screen flex items-center justify-center pb-10"
         style={{ background: "rgba(0,0,0,0.02)" }}
       >
         <p>

@@ -20,7 +20,7 @@ export default () => {
     const title = (() => {
       const item = $("h1").first()
       let title = frontmatter.title
-      if (item) {
+      if (item.text()) {
         title = item.text()
         item.remove()
       }
@@ -29,7 +29,7 @@ export default () => {
     const cover = (() => {
       const item = $("img").first()
       let cover = frontmatter.cover
-      if (item) {
+      if (item.attr("src")) {
         cover = item.attr("src")
         item.remove()
       }
@@ -98,12 +98,12 @@ export default () => {
             }
             const getLastUrlPiece = URL =>
               URL.split("/").splice(-1, 1)[0].replace(/\\/g, "")
-            if (code.includes("youtube")) {
+            if (posibleURL.includes("youtube")) {
               posibleURL = `https://www.youtube-nocookie.com/embed/${getLastUrlPiece(
                 posibleURL
               ).replace("watch?v=", "")}`
             }
-            if (code.includes("vimeo")) {
+            if (posibleURL.includes("vimeo")) {
               posibleURL = `https://player.vimeo.com/video/${getLastUrlPiece(
                 posibleURL
               )}?autoplay=0&title=0&byline=0&portrait=0`

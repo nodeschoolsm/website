@@ -13,6 +13,7 @@ body {
   scroll-behavior: smooth;
   font-family: "Poppins", sans-serif;
   line-height: 1.1;
+  outline: none;
 }
 
 ::-webkit-scrollbar {
@@ -212,7 +213,8 @@ blockquote p {
 }
 .toc li::after {
   content: "-";
-  @apply text-dark-10 text-lg -mt-4;
+  margin-top: -1.22rem;
+  @apply text-dark-10 text-lg;
 }
 .toc ul {
   @apply mb-2;

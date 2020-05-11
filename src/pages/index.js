@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import Footer from "../components/footer"
 import Burguer from "../components/burguer"
+import Seo from "../components/seo"
 import Marquee from "../components/marquee"
 const logo = require("../assets/image/logo.png")
 
@@ -66,6 +67,7 @@ export default () => {
       }}
       className="flex flex-col max-h-screen overflow-y-auto overflow-x-hidden"
     >
+      <Seo />
       <div className="flex">
         <div
           id="particles"
