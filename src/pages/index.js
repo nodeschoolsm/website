@@ -190,14 +190,13 @@ export default () => {
         <form
           method="POST"
           action="/form-submitted"
+          target="_self"
           name="contact-us"
           data-netlify="true"
           className="flex flex-col p-6 my-32 w-full max-w-xl text-white"
         >
           <h2>Contactanos</h2>
-          <label for="name" className="mt-2 mt-4 text-xs">
-            Nombre
-          </label>
+          <label className="mt-2 mt-4 text-xs">Nombre</label>
           <input
             required
             className="border-light-60 border-b-2 bg-transparent mb-3 p-3"
@@ -205,9 +204,7 @@ export default () => {
             name="name"
             placeholder="Jhon Doe"
           />
-          <label for="email" className="mt-3 text-xs">
-            Email
-          </label>
+          <label className="mt-3 text-xs">Email</label>
           <input
             required
             className="border-light-60 border-b-2 bg-transparent mb-3 p-3"
@@ -215,9 +212,7 @@ export default () => {
             name="email"
             placeholder="email@dominio.com"
           />
-          <label for="message" className="mt-3 text-xs">
-            Mensaje
-          </label>
+          <label className="mt-3 text-xs">Mensaje</label>
           <textarea
             required
             className="border-light-60 border-b-2 bg-transparent mb-3 p-3"

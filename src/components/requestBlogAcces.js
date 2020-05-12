@@ -22,6 +22,7 @@ export default () => {
         <form
           data-netlify="true"
           name="request-blog-access"
+          target="_self"
           action="/form-submitted"
           method="POST"
           className="flex flex-col space-y-4 text-base"
