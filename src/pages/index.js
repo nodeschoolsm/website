@@ -92,7 +92,7 @@ export default () => {
           )}
         </div>
         <div className="flex-grow" style={{ minHeight: videoHeight }}>
-          <div className="bg-yellow h-2 w-8 absolute top-0 right-0 z-10 mt-4"/>
+          <div className="bg-yellow h-2 w-8 absolute top-0 right-0 z-10 mt-4" />
           <video
             id="video"
             loop
@@ -185,7 +185,9 @@ export default () => {
           name="contact-us"
           data-netlify="true"
           className="flex flex-col p-6 my-32 w-full max-w-xl text-white"
+          netlify-honeypot="botss"
         >
+          <input type="hidden" name="botss" />
           <h2>Contactanos</h2>
           <label className="mt-2 mt-4 text-xs">Nombre</label>
           <input

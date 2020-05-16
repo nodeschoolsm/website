@@ -26,7 +26,9 @@ export default () => {
           action="/form-submitted"
           method="POST"
           className="flex flex-col space-y-4 text-base"
+          netlify-honeypot="botss"
         >
+          <input type="hidden" name="botss" />
           <div>
             <label className="text-xs mb-1 w-full">Nombre y Apellido</label>
             <input
