@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet"
 import Socials from "../components/socials"
 import Nav from "../components/nav"
 import { CommentCount } from "disqus-react"
-import { CommentOutlined, AlertOutlined, FormOutlined } from "@ant-design/icons"
+import { CommentOutlined, FormOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 export default ({ pageContext = {} }) => {
   const { bio = "", image, name = "NOMBRE", posts = [] } = pageContext
@@ -17,7 +17,7 @@ export default ({ pageContext = {} }) => {
         <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
       <Seo image={image} description={bio} title={`Autores | ${name}`} />
-      <Nav />
+      <Nav  title="AUTORES"/>
       <div className="max-w-3xl mx-auto">
         <div className="mt-24 mx-4 lg:mx-16 text-center">
           <img

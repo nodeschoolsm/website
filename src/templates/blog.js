@@ -61,7 +61,7 @@ export default ({ pageContext = {} }) => {
         image="https://nodeschoolsm.io/SEO_BLOG.jpg"
       />
       <section className="w-full bg-white">
-        <Nav />
+        <Nav title="Blog"/>
         <div className="mx-auto max-w-3xl px-6 font-bold mb-2 mt-6 flex items-center space-x-1">
           <ControlOutlined />
           <div>FILTROS</div>

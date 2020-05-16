@@ -68,6 +68,26 @@ exports.createPages = async ({ graphql, actions }) => {
               }
             }
           }
+          airtable: allAirtable {
+            group(field: data___email_speaker) {
+              nodes {
+                data {
+                  name_speaker
+                  social
+                  slides {
+                    url
+                  }
+                  diploma {
+                    url
+                  }
+                  bio_speaker
+                  email_speaker
+                  event_name
+                  name
+                }
+              }
+            }
+          }
         }
       `
     ).then(async result => {

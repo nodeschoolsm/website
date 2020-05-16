@@ -27,44 +27,34 @@ export default ({ style = {}, className = "" }) => {
       >
         <div
           onScroll={e => e.preventDefault()}
-          className="overflow-x-hidden text-right overflow-y-auto px-8 flex flex-col text-xl font-bold items-end h-full text-white"
+          className="overflow-x-hidden text-right overflow-y-auto px-8 flex flex-col text-xl font-bold items-start h-full text-white"
         >
           <div className="flex-grow"></div>
           <a href="/" className="my-2px" target="_self">
             Homepage
           </a>
-          <a href="/eventos/meetups" className="my-2px">
-            Nodeschool - Meetups
-            <span className="text-xs font-light uppercase italic">
-              /Eventos
-            </span>
-          </a>
-          <a href="/eventos/open-hack-day" className="my-2px">
+
+          <a href="/events/open-hack-day" className="my-2px">
             Open Hack Day
-            <span className="text-xs font-light uppercase italic">
-              /Eventos
-            </span>
+            <span className="text-xs font-light uppercase italic">/Event</span>
           </a>
-          <a href="/eventos/nerd-talk" className="my-2px">
-            NerdTalk
-            <span className="text-xs font-light uppercase italic">
-              /Eventos
-            </span>
-          </a>
-          <a href="/eventos/web-summit" className="my-2px">
+          <a href="/events/web-summit" className="my-2px">
             WebSummit
-            <span className="text-xs font-light uppercase italic">
-              /Eventos
-            </span>
+            <span className="text-xs font-light uppercase italic">/Event</span>
           </a>
-          <a href="/eventos/codevent" className="my-2px">
+          <a href="/events/codevent" className="my-2px">
             CODEVENT
-            <span className="text-xs font-light uppercase italic">
-              /Eventos
-            </span>
+            <span className="text-xs font-light uppercase italic">/Event</span>
+          </a>
+          <a href="/events" className="my-2px">
+            Todos los eventos
+          </a>
+
+          <a href="/speakers" className="my-2px">
+            Presentations
           </a>
           <a href="/speakers" className="my-2px">
-            Speakers
+            Event speakers
           </a>
           <a href="/sponsors" className="my-2px">
             Sponsors

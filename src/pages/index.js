@@ -92,16 +92,7 @@ export default () => {
           )}
         </div>
         <div className="flex-grow" style={{ minHeight: videoHeight }}>
-          <div className="bg-yellow h-2 w-8 absolute top-0 right-0 z-10 mt-4"></div>
-          <div
-            style={{
-              transform: "rotate(-90deg)",
-              transformOrigin: "100% 100%",
-            }}
-            className="absolute right-0 mr-10 top-0 z-10 bg-black text-white invisible lg:visible py-4 px-6 uppercase font-black"
-          >
-            TECH COMMUNITY
-          </div>
+          <div className="bg-yellow h-2 w-8 absolute top-0 right-0 z-10 mt-4"/>
           <video
             id="video"
             loop
@@ -189,7 +180,6 @@ export default () => {
       <div className="bg-dark-95 flex justify-center z-1">
         <form
           method="POST"
-          action="/form-submitted"
           target="_self"
           name="contact-us"
           data-netlify="true"

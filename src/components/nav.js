@@ -1,11 +1,11 @@
 import React from "react"
 import Burguer from "../components/burguer"
 
-export default () => {
+export default ({ title = "TITULO" }) => {
   return (
     <nav className="z-10 bg-white w-full flex items-center sticky top-0 border-b border-dark-10">
       <Burguer className="z-1 sticky top-0" />
-      <div className="text-black mx-8 text-sm">AUTORES</div>
+      <div className="text-black mx-8 text-sm uppercase">{title}</div>
       <div
         style={{ minWidth: 6, minHeight: 6 }}
         className="rounded-full mx-6 bg-dark-15"

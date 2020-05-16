@@ -7,25 +7,40 @@ module.exports = {
         path: `${__dirname}/src/assets`,
       },
     },
-    {
-      resolve: `gatsby-source-google-docs`,
-      options: {
-        folders: ["1vx3FteyxlUrMxvi4EDNwUcfzt3lIN_lA"],
-        debug: true,
-      },
-    },
+
     {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+
           {
             resolve: `gatsby-remark-images`,
             options: {
               linkImagesToOriginal: false,
             },
           },
-          `gatsby-remark-static-images`,
+          `gatsby-remark-static-images`
         ],
+      },
+    },
+    {
+      resolve: `gatsby-source-airtable`,
+      options: {
+        apiKey: process.env.AIRTABLE,
+        concurrency: 5,
+        tables: [
+          {
+            baseId: `app95QzMBZ7lbOT9b`,
+            tableName: `presentaciones`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-source-google-docs`,
+      options: {
+        folders: ["1vx3FteyxlUrMxvi4EDNwUcfzt3lIN_lA"],
+        debug: true,
       },
     },
     `gatsby-plugin-sharp`,
