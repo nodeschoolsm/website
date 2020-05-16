@@ -180,6 +180,7 @@ export default () => {
       <div className="bg-dark-95 flex justify-center z-1">
         <form
           method="POST"
+          action="/form-submitted"
           target="_self"
           name="contact-us"
           data-netlify="true"
