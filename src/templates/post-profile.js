@@ -17,7 +17,7 @@ export default ({ pageContext = {} }) => {
         <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
       <Seo image={image} description={bio} title={`Autores | ${name}`} />
-      <Nav  title="AUTORES"/>
+      <Nav title="AUTORES" />
       <div className="max-w-3xl mx-auto">
         <div className="mt-24 mx-4 lg:mx-16 text-center">
           <img
@@ -88,7 +88,7 @@ export default ({ pageContext = {} }) => {
         </div>
       </div>
       <div className="my-8" />
-      <RequestBlogAcces />
+      <RequestBlogAcces id={name} />
       <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
       <Footer />
     </div>

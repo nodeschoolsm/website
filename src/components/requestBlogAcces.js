@@ -1,6 +1,6 @@
 import React from "react"
 import { UserAddOutlined } from "@ant-design/icons"
-export default () => {
+export default ({ id = "request" }) => {
   return (
     <section className="w-full bg-white pt-16 pb-24">
       <img
@@ -21,7 +21,7 @@ export default () => {
       <p className="mx-auto px-6 mt-10 lg:mt-0">
         <form
           data-netlify="true"
-          name="request-blog-access"
+          name={`${id}-blog-access`}
           target="_self"
           action="/form-submitted"
           method="POST"
