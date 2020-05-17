@@ -7,6 +7,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.6",
     "disqus-react": "^1.0.8",
+    "dotenv": "^8.2.0",
     "gatsby": "^2.21.0",
     "gatsby-plugin-manifest": "^2.4.0",
     "gatsby-plugin-postcss": "^2.3.0",

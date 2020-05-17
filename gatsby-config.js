@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 module.exports = {
   plugins: [
     {
@@ -11,14 +13,13 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
-
           {
             resolve: `gatsby-remark-images`,
             options: {
               linkImagesToOriginal: false,
             },
           },
-          `gatsby-remark-static-images`
+          `gatsby-remark-static-images`,
         ],
       },
     },
