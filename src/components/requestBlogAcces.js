@@ -29,17 +29,17 @@ export default () => {
                 { name: "form-name", value: "request-blog-access" },
                 ...e.currentTarget.querySelectorAll("input"),
               ]
-                .map(e => {
-                  return {
-                    value: e.value,
-                    name: e.name,
-                  }
-                })
-                .map(
-                  ({ value, name }) =>
+                .map(({ value, name }) => {
+                  return (
                     encodeURIComponent(name) + "=" + encodeURIComponent(value)
-                ),
-            }).then(() => (window.location.href = "/form-submitted"))
+                  )
+                })
+                .join("&"),
+            })
+              .then(() => {
+                window.location.href = "/form-submitted"
+              })
+              .catch(console.error)
           }}
           data-netlify="true"
           name="request-blog-access"
