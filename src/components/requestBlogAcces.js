@@ -1,6 +1,6 @@
 import React from "react"
 import { UserAddOutlined } from "@ant-design/icons"
-export default ({ id = "request" }) => {
+export default () => {
   return (
     <section className="w-full bg-white pt-16 pb-24">
       <img
@@ -20,15 +20,32 @@ export default ({ id = "request" }) => {
       </p>
       <p className="mx-auto px-6 mt-10 lg:mt-0">
         <form
+          onSubmit={e => {
+            e.preventDefault()
+            fetch("/", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: [
+                { name: "form-name", value: "request-blog-access" },
+                ...e.currentTarget.querySelectorAll("input"),
+              ]
+                .map(e => {
+                  return {
+                    value: e.value,
+                    name: e.name,
+                  }
+                })
+                .map(
+                  ({ value, name }) =>
+                    encodeURIComponent(name) + "=" + encodeURIComponent(value)
+                ),
+            }).then(() => (window.location.href = "/form-submitted"))
+          }}
           data-netlify="true"
-          name={`${id}-blog-access`}
-          target="_self"
-          action="/form-submitted"
+          name="request-blog-access"
           method="POST"
           className="flex flex-col space-y-4 text-base"
-          netlify-honeypot="botss"
         >
-          <input type="hidden" name="botss" />
           <div>
             <label className="text-xs mb-1 w-full">Nombre y Apellido</label>
             <input

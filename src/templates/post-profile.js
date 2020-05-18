@@ -88,7 +88,7 @@ export default ({ pageContext = {} }) => {
         </div>
       </div>
       <div className="my-8" />
-      <RequestBlogAcces id={name} />
+      <RequestBlogAcces/>
       <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
       <Footer />
     </div>
