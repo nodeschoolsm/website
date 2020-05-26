@@ -77,8 +77,10 @@ particle {
   opacity: 0;
 }
 .menu {
-  width: 0rem;
-  transition: width 0.35s ease-in-out;
+  transform: scaleX(0);
+  width: 20rem;
+  transform-origin: 0 0;
+  transition: transform 0.35s ease-in-out;
 }
 #nav,
 #video {
@@ -86,7 +88,7 @@ particle {
 }
 #nav.open .menu {
   visibility: visible;
-  width: 20rem;
+  transform: scaleX(1);
 }
 #nav.open .menu > div {
   opacity: 1;

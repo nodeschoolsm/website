@@ -51,7 +51,7 @@ export default ({ pageContext = {}, path }) => {
       <div className="bg-white">
         <div
           className="w-full overflow-hidden h-64 flex items-end xl:h-screen"
-          style={{ minHeight: "20rem" }}
+          style={{ minHeight: "22rem" }}
         >
           <div className="absolute hidden lg:block text-light-70 bottom-0 uppercase text-sm right-0 z-10 p-6">
             {createdTime}, <b>{timeToRead}min</b>
@@ -67,7 +67,7 @@ export default ({ pageContext = {}, path }) => {
             alt="cover"
           />
         </div>
-        <div className="px-6 py-8 lg:py-16 lg:px-16 max-w-6xl mx-auto">
+        <div className="px-6 py-16 lg:px-16 max-w-6xl mx-auto">
           <h1 className="uppercase text-5xl m-0 font-sans">{title}</h1>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default ({ pageContext = {}, path }) => {
           {tags.join(" • ")}
         </div>
       </div>
-      <div className="flex mt-12">
+      <div className="flex lg:mt-12">
         <div
           className="post"
           dangerouslySetInnerHTML={{
