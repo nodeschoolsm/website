@@ -105,26 +105,23 @@ exports.createPages = async ({ graphql, actions }) => {
         }
         const frontmatter = (() => {
           let state = { tags: ["no-tags"], ready: "false" }
-          $("pre code")
-            .toArray()
-            .filter(e => {
-              return !e.attribs.class
-            })
-            .map(e => {
-              const config = $(e).html().trim().split("\n")
-              $(e).parent().remove()
-              return config.map(item => {
-                const [head = "", content = ""] = item.split(":")
-                const prop = head.trim().toLowerCase()
-                if (prop && content) {
-                  if (content.includes(",")) {
-                    state[prop] = content.split(",").map(e => e.trim())
-                  } else {
-                    state[prop] = content.trim()
-                  }
+          const item = $("pre code").first()
+          if (item.text()) {
+            const config = item.html().trim().split("\n")
+            item.parent().remove()
+            config.map(item => {
+              const [head = "", content = ""] = item.split(":")
+              const prop = head.trim().toLowerCase()
+              const value = content.trim().toLowerCase()
+              if (prop && content) {
+                if (content.includes(",")) {
+                  state[prop] = value.split(",").map(e => e.trim())
+                } else {
+                  state[prop] = value.trim()
                 }
-              })
+              }
             })
+          }
           state.ready = state.ready.includes("true")
           return state
         })()
@@ -141,7 +138,9 @@ exports.createPages = async ({ graphql, actions }) => {
                 code = code.replace(/\[.+\(|\)/g, "")
               }
               let language =
-                e.attribs && e.attribs.class.replace("language-", "")
+                e.attribs &&
+                e.attribs.class &&
+                e.attribs.class.replace("language-", "")
               if (language == "gif") {
                 return $(e).parent().replaceWith(`<img src="${code}"/>`)
               }
@@ -178,7 +177,8 @@ exports.createPages = async ({ graphql, actions }) => {
                   .replace(/\n{5,}/g, T.repeat(2))
                   .replace(/\n{2,}/g, T)
                   .replace(new RegExp(T, "g"), "\n")
-                  .replace(/\\\*/g, "*"),
+                  .replace(/\\\*/g, "*")
+                  .replace(/\/`/g, "`"),
                 grammar,
                 language
               )
@@ -190,6 +190,7 @@ exports.createPages = async ({ graphql, actions }) => {
               $(e).removeAttr("alt")
               $(e).removeAttr("title")
             })
+          const encodeMe = t => t.replace(/ /g, "-").replace(/A-z0-0/g, "")
           $("a,h1,h2,h3,h4")
             .toArray()
             .forEach(e => {
@@ -203,7 +204,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 $(e).attr("href", href)
               }
               const textIn = $(e).text()
-              $(e).attr("id", textIn.replace(/ /g, "-").replace(/A-z0-0/g, ""))
+              $(e).attr("id", encodeMe(textIn))
               if (!textIn) {
                 $(e).remove()
               }
@@ -215,13 +216,7 @@ exports.createPages = async ({ graphql, actions }) => {
               const isFirst = index == 0
               $toc(a).attr(
                 "href",
-                isFirst
-                  ? "#top"
-                  : "#" +
-                      $toc(a)
-                        .text()
-                        .replace(/ /g, "-")
-                        .replace(/A-z0-0/g, "")
+                isFirst ? "#top" : "#" + encodeMe($toc(a).text())
               )
             })
 

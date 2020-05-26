@@ -5,11 +5,7 @@ import Nav from "../components/nav"
 import RequestBlogAcces from "../components/requestBlogAcces"
 import { Helmet } from "react-helmet"
 import { CommentCount } from "disqus-react"
-import {
-  CommentOutlined,
-  AlertOutlined,
-  ControlOutlined,
-} from "@ant-design/icons"
+import { AlertOutlined, ControlOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 const items = {
   tag:
@@ -57,12 +53,12 @@ export default ({ pageContext = {} }) => {
         <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
       <Seo
-        title="Blog | Nodeschool San Miguel"
+        title="NodeschoolSM Blog"
         image="https://nodeschoolsm.io/SEO_BLOG.jpg"
       />
       <section className="w-full bg-white">
-        <Nav title="Blog"/>
-        <div className="mx-auto max-w-3xl px-6 font-bold mb-2 mt-6 flex items-center space-x-1">
+        <Nav />
+        <div className="mx-auto max-w-3xl px-6 font-bold mb-2 mt-8 flex items-center space-x-1">
           <ControlOutlined />
           <div>FILTROS</div>
         </div>
@@ -154,13 +150,14 @@ export default ({ pageContext = {} }) => {
           style={{ minHeight: "22rem" }}
         >
           {userPosts.length ? (
-            userPosts.map(({ frontmatter = {} }) => {
+            userPosts.map(({ frontmatter = {}, profile = {} }) => {
               const {
                 description,
                 path = "",
                 title,
                 timeToRead = 0,
                 tags = [],
+                createdTime = "2020",
                 cover,
               } = frontmatter
               const url = `https://nodeschoolsm.io${path}`
@@ -171,35 +168,27 @@ export default ({ pageContext = {} }) => {
                   title="Continuar leyendo"
                   className="border-b hover:shadow-inner border-r block w-full lg:w-1/2 flex flex-col border-dark-10 p-6 border-b-0 hover:border-dark-10 hover:text-dark-90"
                 >
-                  <div className="flex flex-grow flex-col">
-                    <div
-                      className="w-full"
-                      style={{
-                        height: "calc(15rem + 10vh)",
-                      }}
-                    >
-                      <img
-                        className="w-full h-full object-cover"
-                        src={cover}
-                        alt="cover"
-                      />
-                    </div>
-                    <div className="text-base font-bold mt-4">{title}</div>
-                    <div className="text-xs mt-1 text-dark-55 flex-grow">
-                      {description}
-                    </div>
+                  <div
+                    className="w-full"
+                    style={{
+                      height: "calc(15rem + 10vh)",
+                    }}
+                  >
+                    <img
+                      className="w-full h-full object-cover"
+                      src={cover}
+                      alt="cover"
+                    />
                   </div>
-                  <div className="w-full flex text-xs items-center justify-end pt-2 space-x-2">
-                    <div>{timeToRead}min</div>
-                    <div>/</div>
-                    {tags.length
-                      ? [
-                          <div className="mx-2">{tags.join(", ")}</div>,
-                          <div>/</div>,
-                        ]
-                      : null}
-                    <CommentOutlined />
-                    <div className="ml-2 hidden sm:block">
+                  <div className="text-base font-bold mt-6 text-2xl">
+                    {title}
+                  </div>
+
+                  <div className="text-sm mt-4 text-dark-80 flex-grow">
+                    {description}
+                  </div>
+                  <div className="w-full h-10 pb-1 text-dark-80 flex text-xs items-center space-x-2 overflow-y-hidden overflow-x-auto">
+                    <div className="flex whitespace-no-wrap">
                       <CommentCount
                         shortname="nodeschoolsm"
                         config={{
@@ -210,6 +199,29 @@ export default ({ pageContext = {} }) => {
                       >
                         0 Respuestas
                       </CommentCount>
+                    </div>
+                    {tags.length
+                      ? [
+                          <div>/</div>,
+                          <div className="mx-2 whitespace-no-wrap">
+                            {tags.join(" • ")}
+                          </div>,
+                        ]
+                      : null}
+                  </div>
+                  <div className="w-full flex mt-6 border-l-4 border-yellow pl-3">
+                    <img
+                      src={profile.image}
+                      alt="profile-pic"
+                      className="w-12 h-12 rounded-full"
+                    />
+                    <div className="pl-2 pt-2">
+                      <b className="text-sm block" style={{ color: "#2d7ff9" }}>
+                        {profile.name}
+                      </b>
+                      <div className="text-xs text-dark-65">
+                        {createdTime} • {timeToRead}Min.
+                      </div>
                     </div>
                   </div>
                 </a>

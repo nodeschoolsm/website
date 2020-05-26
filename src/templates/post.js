@@ -34,7 +34,8 @@ export default ({ pageContext = {}, path }) => {
     <div
       onScroll={e => {
         const scrollAmount = e.currentTarget.scrollTop
-        window.postCover.style.opacity = 0.3 + scrollAmount / window.innerHeight
+        window.postCover.style.opacity =
+          0.15 + scrollAmount / window.innerHeight
         const itemTop = window.author.offsetTop
         const startHeight = window.innerHeight
         const result = ((scrollAmount + startHeight) / itemTop) * 100
@@ -42,17 +43,17 @@ export default ({ pageContext = {}, path }) => {
       }}
       className="w-full max-h-screen overflow-x-hidden overflow-y-auto"
     >
-      <Seo title={title} image={cover} description={description} />
+      <Seo title={`Blog | ${title}`} image={cover} description={description} />
       <nav className="absolute top-0 left-0 z-20" id="top">
         <Burguer />
       </nav>
 
       <div className="bg-white">
         <div
-          className="w-full overflow-hidden flex items-end"
-          style={{ height: "66vh", minHeight: "16rem" }}
+          className="w-full overflow-hidden h-64 flex items-end xl:h-screen"
+          style={{ minHeight: "20rem" }}
         >
-          <div className="absolute text-light-70 bottom-0 text-xs right-0 z-10 p-6">
+          <div className="absolute hidden lg:block text-light-70 bottom-0 uppercase text-sm right-0 z-10 p-6">
             {createdTime}, <b>{timeToRead}min</b>
           </div>
           <div
@@ -60,23 +61,22 @@ export default ({ pageContext = {}, path }) => {
             className="absolute inset-0 bg-black z-1"
             style={{ opacity: 0.3 }}
           />
-          <img className="w-full h-full object-cover" src={cover} alt="cover" />
+          <img
+            className="w-full h-full object-cover bg-center"
+            src={cover}
+            alt="cover"
+          />
         </div>
-
-        <div className="px-6 py-8 lg:p-16 max-w-6xl mx-auto">
+        <div className="px-6 py-8 lg:py-16 lg:px-16 max-w-6xl mx-auto">
           <h1 className="uppercase text-5xl m-0 font-sans">{title}</h1>
-          <div className="flex flex-wrap mt-4">
-            {tags.map(text => (
-              <span className="px-2 font-sans cursor-default rounded bg-dark-05 text-dark-45 py-1 text-xs  font-bold m-1">
-                {text}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
-
-      <div className="mt-6 w-full border-t border-dashed border-dark-10" />
-      <div className="flex mt-4 lg:mt-24">
+      <div className="bg-yellow lg:bg-white lg:-mt-16">
+        <div className="px-6 py-5 font-bold uppercase text-sm text-dark-80 lg:text-dark-50 cursor-default lg:px-16 max-w-6xl mx-auto flex items-center flex-wrap space-x-2">
+          {tags.join(" • ")}
+        </div>
+      </div>
+      <div className="flex mt-12">
         <div
           className="post"
           dangerouslySetInnerHTML={{
@@ -130,7 +130,7 @@ export default ({ pageContext = {}, path }) => {
       </div>
       <div
         className="pt-32 border-t border-dark-05 border-dashed border-b min-h-screen flex items-center justify-center pb-10"
-        style={{ background: "rgba(0,0,0,0.02)" }}
+        style={{ background: "rgba(0,0,0,.01)" }}
       >
         <p>
           <img

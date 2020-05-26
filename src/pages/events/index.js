@@ -3,10 +3,11 @@ import Footer from "../../components/footer"
 import Marquee from "../../components/marquee"
 import Nav from "../../components/nav"
 import Seo from "../../components/seo"
+
 export default () => {
   return (
     <div className="w-full max-h-screen overflow-x-hidden overflow-y-auto bg-white">
-      <Nav title="Eventos" />
+      <Nav />
       <div className="min-h-screen"></div>
       <div className="p-8 lg:p-16">
         <div

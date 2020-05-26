@@ -80,7 +80,8 @@ particle {
   width: 0rem;
   transition: width 0.35s ease-in-out;
 }
-#nav, #video {
+#nav,
+#video {
   transition: none;
 }
 #nav.open .menu {
@@ -120,6 +121,15 @@ particle {
 .post p {
   @apply w-full text-lg leading-snug;
 }
+.post > p:first-child {
+  /* This is de Description elem */
+	background: rgba(0, 0, 0, 0.02);
+	margin: 1.5rem -1rem 3rem -1rem;
+	border-radius: 4px;
+	padding: 2rem;
+	font-size: 1.25rem;
+  box-sizing: content-box;
+}
 ol,
 ul {
   @apply max-w-3xl w-full mb-4 mt-1 text-dark-90;
@@ -149,9 +159,7 @@ li::marker {
   .post iframe {
     min-height: 480px;
   }
-  .post pre {
-    @apply table;
-  }
+
 }
 .post img {
   margin: 1rem auto;
@@ -177,12 +185,13 @@ li::marker {
   padding: 0 2px;
 }
 .post blockquote {
-  @apply w-full max-w-3xl bg-dark-05 border-l-4;
+  @apply w-full max-w-3xl bg-dark-05 border-l-8 italic my-6;
   border-color: #2d7ff9;
 }
 blockquote p {
   @apply px-4 py-6;
-  margin-left: -4px;
+  margin-left: .3rem;
+  font-size: 1.25rem !important
 }
 .post.hider {
   background: linear-gradient(

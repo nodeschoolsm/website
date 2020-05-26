@@ -35,7 +35,7 @@ export default () => {
       }
       return cover
     })()
-    const tags = ["no-code"]
+    const tags = []
     $("span")
       .toArray()
       .forEach(elem => {
@@ -53,8 +53,14 @@ export default () => {
       .forEach(item => {
         $(item).removeAttr("style")
       })
-
-    $("style,script").remove()
+    $("h1,h2,h3,h4")
+      .toArray()
+      .forEach(header => {
+        const $item = $(header)
+        if (!$item.text()) {
+          $item.remove()
+        }
+      })
     const html = $.html()
     if (html) {
       const markdown = converter.makeMarkdown(html)
@@ -78,7 +84,6 @@ export default () => {
             })
         }
         cleanedHTML = cleanedHTML.replace(firstCodeTag, "")
-
         codeTags.forEach(tag => {
           const markdownCode = tag.replace(/<p>|<\/p>/g, "")
           const code = markdownCode.split("\n")
@@ -118,7 +123,6 @@ export default () => {
             if (Prism.languages[userLanguage]) {
               language = userLanguage
             }
-
             const htmlCode = Prism.highlight(
               code.join("\n"),
               Prism.languages[language],
@@ -126,7 +130,7 @@ export default () => {
             )
             cleanedHTML = cleanedHTML.replace(
               tag,
-              `<pre><code>${htmlCode}</code></pre>`
+              `<pre><code>${htmlCode.replace(/\/`/g,"`")}</code></pre>`
             )
           }
         })
@@ -141,11 +145,14 @@ export default () => {
     }
   }
   return (
-    <div className="w-full max-h-screen overflow-auto">
+    <div id="mainContainer" className="w-full max-h-screen overflow-auto">
       <style>{`.post div{width: 100%} table{margin-left: auto; margin-right: auto}`}</style>
       <div
         hidden={!frontmatter.content}
-        onClick={() => setFrontmatter(initState)}
+        onClick={() => {
+          setFrontmatter(initState)
+          setTimeout(() => (window.mainContainer.scrollTop = 0), 90)
+        }}
         className="fixed z-1 cursor-pointer text-sm hover:shadow-inner top-0 left-0 bg-yellow font-bold border-dark-10 border-2 px-6 py-4"
       >
         Cancelar preview
@@ -184,19 +191,19 @@ export default () => {
         <img
           src={frontmatter.cover}
           alt="cover"
-          style={{ height: "66vh", minHeight: "16rem" }}
+          style={{ height: "70vh", minHeight: "16rem" }}
           className="w-full object-cover"
         />
         <div className="px-6 py-8 lg:p-16 max-w-6xl mx-auto">
-          <h1 className="uppercase lg:text-5xl m-0 font-sans">{frontmatter.title}</h1>
+          <h1 className="uppercase lg:text-5xl m-0 font-sans">
+            {frontmatter.title}
+          </h1>
           <div className="flex flex-wrap mt-4 space-x-2">
-            <b>TAGS:</b>
-            {frontmatter.tags.map(text => (
-              <span className="bg-dark-05 p-1 text-sm font-sans">{text}</span>
-            ))}
+            <b className="pr-2">TAGS:</b>
+            {frontmatter.tags.join(" , ")}
           </div>
         </div>
-        <div className="bg-dark-20 h-1px mt-6" />
+        <div className="bg-dark-20 h-1px my-6" />
       </div>
       <div
         className="post"

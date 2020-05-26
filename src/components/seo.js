@@ -10,7 +10,7 @@ export default ({
   description = DESCRIPTION,
   image = IMAGE,
 }) => {
-  const { pathname } = useLocation()
+  const { pathname = "/" } = useLocation()
   const url = `${URL}${pathname}`
   const metaTags = [
     {

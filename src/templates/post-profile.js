@@ -17,7 +17,7 @@ export default ({ pageContext = {} }) => {
         <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
       <Seo image={image} description={bio} title={`Autores | ${name}`} />
-      <Nav title="AUTORES" />
+      <Nav />
       <div className="max-w-3xl mx-auto">
         <div className="mt-24 mx-4 lg:mx-16 text-center">
           <img
@@ -26,16 +26,14 @@ export default ({ pageContext = {} }) => {
             style={{ minWidth: "8rem" }}
             className="w-32 h-32 object-cover mx-auto rounded shadow"
           />
-          <b className="text-2xl sm:text-3xl block pt-8">
-            {name} / {totalPosts} Entrada{totalPosts != 1 ? "s" : ""}
-          </b>
+          <b className="text-2xl sm:text-3xl block pt-8">{name}</b>
           <div className="text-dark-75 mt-4">{bio}</div>
           <div className="flex space-x-2 mt-2 justify-center">
             <Socials pageContext={pageContext} />
           </div>
         </div>
-        <div hidden={totalPosts <= 0} className="mt-24 text-dark-70">
-          <div className="uppercase py-4 px-6 text-lg border-dark-10 border-t border-b font-bold flex items-center justify-end space-x-2">
+        <div hidden={totalPosts <= 0} className="mt-24 text-dark-80">
+          <div className="uppercase py-4 px-6 text-xl border-dark-10 border-t border-b font-bold flex items-center justify-end space-x-2">
             <div>MIS ENTRADAS</div>
             <FormOutlined />
           </div>
@@ -56,8 +54,8 @@ export default ({ pageContext = {} }) => {
                 className="border-b block border-dark-10 p-6 border-b-0 hover:border-dark-10 hover:text-dark-90"
               >
                 <div>
-                  <div className="text-base font-bold">{title}</div>
-                  <div className="text-xs mt-1 text-dark-55">{description}</div>
+                  <div className="text-xl font-bold">{title}</div>
+                  <div className="text-sm mt-2 text-dark-65">{description}</div>
                 </div>
                 <div className="w-full flex text-xs items-center justify-end pt-2 space-x-2">
                   <div>{timeToRead}min</div>
@@ -88,7 +86,7 @@ export default ({ pageContext = {} }) => {
         </div>
       </div>
       <div className="my-8" />
-      <RequestBlogAcces/>
+      <RequestBlogAcces />
       <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
       <Footer />
     </div>
