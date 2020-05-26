@@ -20,6 +20,7 @@
     "gatsby-source-filesystem": "^2.3.0",
     "gatsby-source-google-docs": "^2.0.0-beta.6",
     "gatsby-transformer-remark": "^2.8.3",
+    "netlify-plugin-add-instagram": "^0.2.2",
     "prismjs": "^1.20.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
