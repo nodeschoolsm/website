@@ -7,8 +7,8 @@
 [[plugins]]
   package = "netlify-plugin-add-instagram"
   [plugins.inputs]
-    imageFolder = "src/assets/image/instagram"
-    dataFile = "static/instagram.json"
+    imageFolder = "static/instagram"
+    dataFile = "static/instagram/data.json"
     feedTTL = 30
     imageTTL = 1209600
     imageSize = "m"
