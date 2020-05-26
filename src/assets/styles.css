@@ -125,11 +125,11 @@ particle {
 }
 .post > p:first-child {
   /* This is de Description elem */
-	background: rgba(0, 0, 0, 0.02);
-	margin: 1.5rem -1rem 3rem -1rem;
-	border-radius: 4px;
-	padding: 2rem;
-	font-size: 1.25rem;
+  background: rgba(0, 0, 0, 0.02);
+  margin: 1.5rem -1rem 3rem -1rem;
+  border-radius: 4px;
+  padding: 2rem;
+  font-size: 1.25rem;
   box-sizing: content-box;
 }
 ol,
@@ -161,7 +161,6 @@ li::marker {
   .post iframe {
     min-height: 480px;
   }
-
 }
 .post img {
   margin: 1rem auto;
@@ -192,8 +191,8 @@ li::marker {
 }
 blockquote p {
   @apply px-4 py-6;
-  margin-left: .3rem;
-  font-size: 1.25rem !important
+  margin-left: 0.3rem;
+  font-size: 1.25rem !important;
 }
 .post.hider {
   background: linear-gradient(
