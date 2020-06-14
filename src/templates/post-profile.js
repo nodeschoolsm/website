@@ -9,7 +9,7 @@ import { CommentCount } from "disqus-react"
 import { CommentOutlined, FormOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 export default ({ pageContext = {} }) => {
-  const { bio = "", image, name = "NOMBRE", posts = [] } = pageContext
+  const { bio, image, name, posts = [] } = pageContext
   const totalPosts = posts.length
   return (
     <div className="w-full max-h-screen overflow-x-hidden overflow-y-auto bg-white">

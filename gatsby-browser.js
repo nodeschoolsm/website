@@ -1,2 +1,7 @@
-import "prismjs/themes/prism.css"
-import "./src/assets/styles.css"
+require("prismjs/themes/prism.css")
+require("./src/assets/styles.css")
+const mediumZoom = require("medium-zoom").default
+
+exports.onInitialClientRender = () => {
+  mediumZoom("[data-zoomable]")
+}

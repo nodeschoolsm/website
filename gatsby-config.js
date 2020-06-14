@@ -5,48 +5,17 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `assets`,
-        path: `${__dirname}/src/assets`,
+        path: `${__dirname}/src/templates/`,
+        ignore: [`**/*.js`],
       },
     },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              linkImagesToOriginal: false,
-              backgroundColor: "transparent",
-              quality: 65,
-              maxWidth: 1200,
-            },
-          },
-          `gatsby-remark-static-images`,
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-source-airtable`,
-      options: {
-        apiKey: process.env.AIRTABLE,
-        concurrency: 5,
-        tables: [
-          {
-            baseId: `app95QzMBZ7lbOT9b`,
-            tableName: `presentaciones`,
-          },
-        ],
-      },
-    },
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-google-docs`,
       options: {
         folders: ["1vx3FteyxlUrMxvi4EDNwUcfzt3lIN_lA"],
-        debug: true,
       },
     },
-    `gatsby-plugin-sharp`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-react-helmet`,
     {

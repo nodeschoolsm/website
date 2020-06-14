@@ -8,12 +8,12 @@ export default () => {
         No pudimos encontrar la página que buscas
       </h1>
       <div className="flex justify-center">
-      <img
-        className="w-full"
-        style={{ minWidth: "40rem" }}
-        src={require("../assets/image/404.svg")}
-        alt=""
-      />
+        <img
+          className="w-full"
+          style={{ minWidth: "40rem" }}
+          src={require("../assets/image/404.svg")}
+          alt=""
+        />
       </div>
       <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
       <Footer />

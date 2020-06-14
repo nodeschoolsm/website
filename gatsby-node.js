@@ -1,7 +1,66 @@
 const PATH = require(`path`)
 const cheerio = require("cheerio")
 const Prism = require("prismjs")
+const fetch = require("node-fetch")
+const sharp = require("sharp")
+const MAX_IMAGE_WIDTH = 1200
+//Images with higher width are resized to 1200
 
+const loadAllImages = async ($, { nodes, array }) => {
+  await Promise.all(
+    $("img")
+      .toArray()
+      .map(img => {
+        return new Promise(send => {
+          const mySrc = img.attribs.src
+          if (mySrc) {
+            const index = array.indexOf(mySrc)
+            if (index > -1) {
+              send($(img).attr("src", nodes[index].publicURL))
+            } else {
+              fetch(img.attribs.src)
+                .then(r => {
+                  const type = r.headers.get(`content-type`)
+                  return new Promise(send => {
+                    r.buffer().then(buffer => {
+                      if (["png", "jpg", "jpeg"].includes(type)) {
+                        sharp(buffer)
+                          .resize({ width: MAX_IMAGE_WIDTH })
+                          .toBuffer()
+                          .then(moddedBuffer => {
+                            send({
+                              type,
+                              buffer: moddedBuffer,
+                            })
+                          })
+                      } else {
+                        send({
+                          type,
+                          buffer,
+                        })
+                      }
+                    })
+                  })
+                })
+                .then(({ buffer, type }) => {
+                  send(
+                    $(img).attr(
+                      "src",
+                      `data:${type};base64,${buffer.toString("base64")}`
+                    )
+                  )
+                })
+                .catch(e => {
+                  console.log(e)
+                  send()
+                })
+            }
+          } else send()
+        })
+      })
+  )
+  return $
+}
 exports.createPages = async ({ graphql, actions }) => {
   graphql(
     `
@@ -34,24 +93,10 @@ exports.createPages = async ({ graphql, actions }) => {
             }
           }
         }
-        airtable: allAirtable {
-          group(field: data___email_speaker) {
-            nodes {
-              data {
-                name_speaker
-                social
-                slides {
-                  url
-                }
-                diploma {
-                  url
-                }
-                bio_speaker
-                email_speaker
-                event_name
-                name
-              }
-            }
+        imgURLS: allFile {
+          nodes {
+            publicURL
+            relativePath
           }
         }
       }
@@ -60,17 +105,22 @@ exports.createPages = async ({ graphql, actions }) => {
     let allPosts = []
     let profiles = {}
     const tags = {}
-    const { authors = [], entries = [] } = result.data
+    const { authors, entries, imgURLS } = result.data
+    const allImages = {
+      nodes: imgURLS.nodes,
+      array: imgURLS.nodes.map(({ relativePath }) => relativePath),
+    }
     for (item of authors.nodes) {
       //Getting all blog authors
       const profile = item.document.path.replace(/\/|about/g, "")
       const $ = cheerio.load(item.childMarkdownRemark.html)
+      await loadAllImages($, allImages)
       let image = `/social.svg`
-      const imageItems = $("img").toArray()
-      if (imageItems[0]) {
-        image = imageItems[0].attribs.src
+      const imageSrc = $("img").first().attr("src")
+      if (imageSrc) {
+        image = imageSrc
       }
-      const config = { image }
+      const config = { image, name: "USUARIO", bio: "NO BIO" }
       $("a")
         .toArray()
         .forEach(e => {
@@ -94,6 +144,7 @@ exports.createPages = async ({ graphql, actions }) => {
       const $ = cheerio.load(props.childMarkdownRemark.html, {
         decodeEntities: false,
       })
+      await loadAllImages($, allImages)
       let path = props.document.path
       const [_, username, id] = props.document.path.split("/")
       if (id !== "about") {
@@ -130,6 +181,9 @@ exports.createPages = async ({ graphql, actions }) => {
             const prevAmount = tags[tag]
             tags[tag] = prevAmount ? prevAmount + 1 : 1
           })
+          //&await downloadImages($)
+          //We wait to generate base64 url's for posts images
+
           $("pre code")
             .toArray()
             .forEach(e => {
@@ -186,7 +240,10 @@ exports.createPages = async ({ graphql, actions }) => {
             })
           $("img")
             .toArray()
-            .forEach(e => {
+            .forEach((e, i) => {
+              if (i > 0) {
+                $(e).attr("data-zoomable", "")
+              }
               $(e).removeAttr("alt")
               $(e).removeAttr("title")
             })
@@ -258,13 +315,6 @@ exports.createPages = async ({ graphql, actions }) => {
           frontmatter.datesSum = eval(props.document.datesSum)
           context.frontmatter = frontmatter
           allPosts.push(context)
-          const previusUserPosts = profiles[username].posts
-          profiles[username] = {
-            ...profiles[username],
-            posts: previusUserPosts
-              ? [...previusUserPosts, context]
-              : [context],
-          }
           actions.createPage({
             path,
             context,
