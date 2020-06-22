@@ -11,7 +11,11 @@ const pxHelpers = {}
   pxHelpers[name] = name
 })
 module.exports = {
-  purge: ["./src/pages/**/*.js"],
+  purge: [
+    "./src/pages/**/*.js",
+    "./src/templates/*.js",
+    "./src/components/*.js",
+  ],
   theme: {
     extend: {
       width: pxHelpers,

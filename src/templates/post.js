@@ -6,6 +6,15 @@ import Seo from "../components/seo"
 import { ReadOutlined } from "@ant-design/icons"
 import { DiscussionEmbed } from "disqus-react"
 import Socials from "../components/socials"
+const VOIDED = `<html><head></head><body></body></html>`
+const getVoidContentTemplate = username => `
+<h1>ENTRADA VACÍA</h1>
+<p>
+  El autor esta entrada no ha agregado contenido aún :(<br/>
+  Mientras esperas peudes ver las demás entradas del autor <a href="/blog/${username}">acá.</a>
+</p>
+<img src="/paper-plane.svg" alt="empty" class="w-full pt-32 opacity-50 lg:pr-16" style="max-width: 12rem"/>
+`
 export default ({ pageContext = {}, path }) => {
   const { profile = {}, frontmatter = {}, username = "" } = pageContext
   const {
@@ -18,18 +27,8 @@ export default ({ pageContext = {}, path }) => {
     description,
     toc,
   } = frontmatter
-  const voidContentTemplate = `
-  <h1>ENTRADA VACÍA</h1>
-  <p>
-    El autor esta entrada no ha agregado contenido aún :(<br/>
-    Mientras esperas peudes ver las demás entradas del autor <a href="/blog/${username}">acá.</a>
-  </p>
-  <img src="/paper-plane.svg" alt="empty" class="w-full pt-32 opacity-50 lg:pr-16" style="max-width: 12rem"/>
-  `
   const contentToRender =
-    content == `<html><head></head><body></body></html>`
-      ? voidContentTemplate
-      : content
+    content == VOIDED ? getVoidContentTemplate(username) : content
   return (
     <div
       onScroll={e => {
@@ -64,7 +63,7 @@ export default ({ pageContext = {}, path }) => {
           <img
             className="w-full h-full object-cover bg-center"
             src={cover}
-            alt="cover"
+            alt="COVER"
           />
         </div>
         <div className="px-6 py-16 lg:px-16 max-w-6xl mx-auto">
@@ -123,7 +122,7 @@ export default ({ pageContext = {}, path }) => {
               title="Ver perfil"
               className="object-cover shadow rounded h-40 h-40 bg-white"
               src={profile.image}
-              alt="author"
+              alt={username}
             />
           </a>
         </div>
@@ -135,7 +134,7 @@ export default ({ pageContext = {}, path }) => {
         <p>
           <img
             src={require("../assets/image/reading-side.svg")}
-            alt=""
+            alt="COMPLETADA"
             className="w-full px-6 max-w-xl mx-auto"
           />
           <b className="text-2xl sm:text-4xl text-center block mt-2 px-6">

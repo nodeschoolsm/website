@@ -3,5 +3,8 @@ require("./src/assets/styles.css")
 const mediumZoom = require("medium-zoom").default
 
 exports.onInitialClientRender = () => {
-  mediumZoom("[data-zoomable]")
+  const SELECTOR = `[data-zoomable]`
+  if (document.querySelector(SELECTOR)) {
+    mediumZoom(SELECTOR)
+  }
 }

@@ -1,65 +1,72 @@
 const PATH = require(`path`)
 const cheerio = require("cheerio")
 const Prism = require("prismjs")
-const fetch = require("node-fetch")
+const nfetch = require("node-fetch")
 const sharp = require("sharp")
 const MAX_IMAGE_WIDTH = 1200
-//Images with higher width are resized to 1200
-
-const loadAllImages = async ($, { nodes, array }) => {
-  await Promise.all(
-    $("img")
-      .toArray()
-      .map(img => {
-        return new Promise(send => {
-          const mySrc = img.attribs.src
-          if (mySrc) {
-            const index = array.indexOf(mySrc)
-            if (index > -1) {
-              send($(img).attr("src", nodes[index].publicURL))
-            } else {
-              fetch(img.attribs.src)
-                .then(r => {
-                  const type = r.headers.get(`content-type`)
-                  return new Promise(send => {
-                    r.buffer().then(buffer => {
-                      if (["png", "jpg", "jpeg"].includes(type)) {
-                        sharp(buffer)
-                          .resize({ width: MAX_IMAGE_WIDTH })
-                          .toBuffer()
-                          .then(moddedBuffer => {
-                            send({
-                              type,
-                              buffer: moddedBuffer,
+//images with higher width are resized to 1200
+const loadAllImages = ($, { nodes = [], array = [] }) => {
+  return new Promise(async completed => {
+    const images = $("img").toArray()
+    for (i in images) {
+      const img = images[i]
+      const $item = $(img)
+      if (i > 0) {
+        $item.attr("data-zoomable", "")
+      }
+      $item.removeAttr("alt")
+      $item.removeAttr("title")
+      await new Promise(async imgSrcChanged => {
+        const mySrc = img.attribs.src
+        const insideQueryIndex = array.indexOf(mySrc)
+        if (insideQueryIndex > -1) {
+          $item.attr("src", nodes[insideQueryIndex].publicURL)
+        } else if (mySrc.includes("googleusercontent")) {
+          await new Promise(done => {
+            nfetch(mySrc)
+              .then(response => {
+                const type = response.headers.get("content-type")
+                return new Promise(sendBuffer => {
+                  response.buffer().then(buffer => {
+                    if (["png", "jpg", "jpeg"].includes(type.replace("image/"))) {
+                      const sharpedImage = sharp(buffer)
+                      return sharpedImage
+                        .metadata()
+                        .then(metadata => {
+                          if (metadata.width > MAX_IMAGE_WIDTH) {
+                            return sharpedImage.resize({
+                              width: MAX_IMAGE_WIDTH,
                             })
-                          })
-                      } else {
-                        send({
-                          type,
-                          buffer,
+                          }
+                          return sharpedImage
                         })
-                      }
-                    })
+                        .then(sharpedImage => sharpedImage.toBuffer())
+                        .then(buffer => {
+                          sendBuffer({ buffer, type })
+                        })
+                    }
+                    sendBuffer({ buffer, type })
                   })
                 })
-                .then(({ buffer, type }) => {
-                  send(
-                    $(img).attr(
-                      "src",
-                      `data:${type};base64,${buffer.toString("base64")}`
-                    )
-                  )
-                })
-                .catch(e => {
-                  console.log(e)
-                  send()
-                })
-            }
-          } else send()
-        })
+              })
+              .then(({ buffer, type }) => {
+                if (type) {
+                  const base64 = buffer.toString("base64")
+                  $item.attr("src", `data:${type};base64,${base64}`)
+                }
+                done()
+              })
+              .catch(error => {
+                console.error({ error })
+                done()
+              })
+          })
+        }
+        imgSrcChanged()
       })
-  )
-  return $
+    }
+    completed()
+  })
 }
 exports.createPages = async ({ graphql, actions }) => {
   graphql(
@@ -136,7 +143,6 @@ exports.createPages = async ({ graphql, actions }) => {
             }
           }
         })
-
       profiles[profile] = config
     }
     for (props of entries.nodes) {
@@ -144,7 +150,6 @@ exports.createPages = async ({ graphql, actions }) => {
       const $ = cheerio.load(props.childMarkdownRemark.html, {
         decodeEntities: false,
       })
-      await loadAllImages($, allImages)
       let path = props.document.path
       const [_, username, id] = props.document.path.split("/")
       if (id !== "about") {
@@ -177,13 +182,11 @@ exports.createPages = async ({ graphql, actions }) => {
           return state
         })()
         if (frontmatter.ready) {
+          await loadAllImages($, allImages)
           frontmatter.tags.forEach(tag => {
             const prevAmount = tags[tag]
             tags[tag] = prevAmount ? prevAmount + 1 : 1
           })
-          //&await downloadImages($)
-          //We wait to generate base64 url's for posts images
-
           $("pre code")
             .toArray()
             .forEach(e => {
@@ -237,15 +240,6 @@ exports.createPages = async ({ graphql, actions }) => {
                 language
               )
               $(e).html(html)
-            })
-          $("img")
-            .toArray()
-            .forEach((e, i) => {
-              if (i > 0) {
-                $(e).attr("data-zoomable", "")
-              }
-              $(e).removeAttr("alt")
-              $(e).removeAttr("title")
             })
           const encodeMe = t => t.replace(/ /g, "-").replace(/A-z0-0/g, "")
           $("a,h1,h2,h3,h4")
