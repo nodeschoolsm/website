@@ -51,7 +51,7 @@ export default () => {
   useEffect(() => {
     //hooking to acces window
     if (typeof window === "undefined") return
-    setIsDesktop(window.innerWidth > 600)
+    setIsDesktop(window.innerWidth > 1023)
     window.onresize = () => setIsDesktop(window.innerWidth > 600)
   })
   return (
@@ -99,9 +99,6 @@ export default () => {
             style={{
               height: videoHeight,
               position: isDesktop || "fixed",
-              filter: isDesktop
-                ? "sepia(1) saturate(0)"
-                : "saturate(5) grayscale(2)",
             }}
             className="w-full object-cover absolute"
             src={require("../assets/video/home.mp4")}
@@ -109,7 +106,9 @@ export default () => {
             muted
           />
           <div
-            style={{ minHeight: isDesktop ? videoHeight : "66vh" }}
+            style={{
+              minHeight: isDesktop ? videoHeight : "66vh",
+            }}
             className="w-full bg-light-25 z-2"
           >
             {isDesktop || (

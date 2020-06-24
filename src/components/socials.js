@@ -19,13 +19,13 @@ export default ({ pageContext = {} }) => {
     email = false,
   } = pageContext
   return [
-    [instagram, InstagramOutlined, "https://instagram.com/"],
     [twitter, TwitterOutlined, "https://twitter.com/"],
-    [facebook, FacebookFilled, "https://facebook.com/"],
-    [github, GithubOutlined, "https://github.com/"],
-    [website, null, "website"],
+    [instagram, InstagramOutlined, "https://instagram.com/"],
     [linkedin, LinkedinFilled, "https://linkedin.com/in/"],
+    [github, GithubOutlined, "https://github.com/"],
+    [facebook, FacebookFilled, "https://facebook.com/"],
     [email, MailOutlined, "mailto:", "Enviar email"],
+    [website, null, "website"],
   ].map(([profile, Item, base = "", title = false]) => {
     if (profile) {
       if (base == "website") {
@@ -33,6 +33,7 @@ export default ({ pageContext = {} }) => {
           <a
             target="_blank"
             rel="noopener noreferrer"
+            className="text-lg lg:text-base"
             href={profile.includes("http") ? profile : `https://${profile}`}
             title={title || "Ir al sitio web"}
           >
@@ -49,6 +50,7 @@ export default ({ pageContext = {} }) => {
           target="_blank"
           rel="noopener noreferrer"
           href={href}
+          className="text-lg lg:text-base"
           title={title || "Seguir"}
         >
           <Item />

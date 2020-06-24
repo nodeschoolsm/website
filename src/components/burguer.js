@@ -22,7 +22,11 @@ export default ({ style = {}, className = "" }) => {
         <div className="w-5 bg-white my-1 h-3px" />
       </div>
       <div
-        style={{ minHeight: "15rem", height: "calc(100vh - 16rem)" }}
+        style={{
+          minHeight: "15rem",
+          height: "24rem",
+          boxShadow: "0 0 0 100vmax rgba(255,255,255,0.9)",
+        }}
         className="absolute bg-black menu shadow-xl invisible top-0 left-0 bottom-0 py-16"
       >
         <div

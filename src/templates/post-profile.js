@@ -27,7 +27,10 @@ export default ({ pageContext = {} }) => {
             className="w-32 h-32 object-cover mx-auto rounded shadow"
           />
           <b className="text-2xl sm:text-3xl block pt-8">{name}</b>
-          <div className="text-dark-75 mt-4">{bio}</div>
+          <div
+            className="text-dark-75 mt-4"
+            dangerouslySetInnerHTML={{ __html: bio }}
+          />
           <div className="flex space-x-2 mt-2 justify-center">
             <Socials pageContext={pageContext} />
           </div>
@@ -87,7 +90,7 @@ export default ({ pageContext = {} }) => {
       </div>
       <div className="my-8" />
       <RequestBlogAcces />
-      <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
+      <Marquee>NODESCHOOL SAN MIGUEL, {name}</Marquee>
       <Footer />
     </div>
   )

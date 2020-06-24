@@ -1,6 +1,6 @@
 import React from "react"
 
-export default ({ children = "MARQUEE" }) => {
+export default ({ children = "NODESCHOOL SAN MIGUEL, SV - EL SALVADOR" }) => {
   return (
     <div
       style={{ fontSize: "13rem" }}

@@ -43,14 +43,14 @@ export default ({ pageContext = {}, path }) => {
       className="w-full max-h-screen overflow-x-hidden overflow-y-auto"
     >
       <Seo title={`Blog | ${title}`} image={cover} description={description} />
-      <nav className="absolute top-0 left-0 z-20" id="top">
+      <nav className="absolute xl:fixed top-0 left-0 z-20" id="top">
         <Burguer />
       </nav>
 
       <div className="bg-white">
         <div
-          className="w-full overflow-hidden h-64 flex items-end xl:h-screen"
-          style={{ minHeight: "22rem" }}
+          className="w-full overflow-hidden flex items-end"
+          style={{ minHeight: "10rem" }}
         >
           <div className="absolute hidden lg:block text-light-70 bottom-0 uppercase text-sm right-0 z-10 p-6">
             {createdTime}, <b>{timeToRead}min</b>
@@ -60,18 +60,14 @@ export default ({ pageContext = {}, path }) => {
             className="absolute inset-0 bg-black z-1"
             style={{ opacity: 0.3 }}
           />
-          <img
-            className="w-full h-full object-cover bg-center"
-            src={cover}
-            alt="COVER"
-          />
+          <img className="w-full" src={cover} alt="cargando..." />
         </div>
-        <div className="px-6 py-16 lg:px-16 max-w-6xl mx-auto">
-          <h1 className="uppercase text-5xl m-0 font-sans">{title}</h1>
+        <div className="p-6 lg:p-16 max-w-6xl mx-auto">
+          <h1 className="uppercase text-2xl xl:text-5xl m-0 font-sans">{title}</h1>
         </div>
       </div>
       <div className="bg-yellow lg:bg-white lg:-mt-16">
-        <div className="px-6 py-5 font-bold uppercase text-sm text-dark-80 lg:text-dark-50 cursor-default lg:px-16 max-w-6xl mx-auto flex items-center flex-wrap space-x-2">
+        <div className="px-6 py-5 font-bold uppercase text-xs xl:text-sm text-dark-80 lg:text-dark-50 cursor-default lg:px-16 max-w-6xl mx-auto flex items-center flex-wrap space-x-2">
           {tags.join(" • ")}
         </div>
       </div>
@@ -120,7 +116,7 @@ export default ({ pageContext = {}, path }) => {
           <a href={`/blog/${username}`} className="-mt-8 mb-3">
             <img
               title="Ver perfil"
-              className="object-cover shadow rounded h-40 h-40 bg-white"
+              className="object-cover shadow rounded h-32 w-32 lg:h-40 lg:h-40 bg-white"
               src={profile.image}
               alt={username}
             />
@@ -153,7 +149,7 @@ export default ({ pageContext = {}, path }) => {
         />
       </div>
 
-      <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
+      <Marquee/>
       <Footer />
     </div>
   )

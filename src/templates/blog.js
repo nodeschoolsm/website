@@ -236,7 +236,7 @@ export default ({ pageContext = {} }) => {
         </div>
       </section>
       <RequestBlogAcces />
-      <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
+      <Marquee/>
       <Footer />
     </div>
   )

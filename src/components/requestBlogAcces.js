@@ -12,10 +12,9 @@ export default () => {
         PUBLICA TU ENTRADA
       </div>
       <p className="text-dark-70 text-sm p-6 mx-auto text-center lg:text-left">
-        Estás viendo todas las entradas en el blog, estas entradas son hechas
-        por colaboradores y miembros de la comunidad con los qué estamos
-        completamente agradecidos. Si gustas colaborar con una entradas por
-        favor llena este <b>formulario</b> para notificar a los organizadores y
+        Las entradas del blog son hechas por organizadores y miembros de la
+        comunidad con los qué estamos completamente agradecidos. Si gustas
+        colaborar con una entradas, por favor llena este <b>formulario</b> para
         asignarte un usuario.
       </p>
       <p className="mx-auto px-6 mt-10 lg:mt-0">
@@ -47,7 +46,7 @@ export default () => {
           className="flex flex-col space-y-4 text-base"
         >
           <div>
-            <label className="text-xs mb-1 w-full">Nombre y Apellido</label>
+            <label className="text-xs mb-1 block">Nombre y Apellido</label>
             <input
               required
               className="border-b-2 px-2 w-full border-dark-70 pb-1"
@@ -56,19 +55,19 @@ export default () => {
               placeholder="Leonardo Antonio"
             />
           </div>
-          <div className="flex space-x-4">
-            <div className="w-1/2">
-              <label className="text-xs mb-1 w-full">Username deseado</label>
+          <div className="flex space-y-4 xl:space-y-0 xl:space-x-4 flex-wrap xl:flex-no-wrap">
+            <div className="w-full xl:w-1/2">
+              <label className="text-xs mb-1 block">Username deseado</label>
               <input
                 required
                 className="border-b-2 px-2 w-full border-dark-70 pb-1"
                 name="username"
                 type="text"
-                placeholder="NodeschoolSM"
+                placeholder="LeoN98"
               />
             </div>
-            <div className="w-1/2">
-              <label className="text-xs mb-1">Gmail</label>
+            <div className="w-full xl:w-1/2">
+              <label className="text-xs mb-1 block">Gmail</label>
               <input
                 required
                 className="border-b-2 px-2 w-full border-dark-70 pb-1"

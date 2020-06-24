@@ -4,69 +4,84 @@ const Prism = require("prismjs")
 const nfetch = require("node-fetch")
 const sharp = require("sharp")
 const MAX_IMAGE_WIDTH = 1200
-//images with higher width are resized to 1200
-const loadAllImages = ($, { nodes = [], array = [] }) => {
-  return new Promise(async completed => {
-    const images = $("img").toArray()
-    for (i in images) {
-      const img = images[i]
-      const $item = $(img)
-      if (i > 0) {
-        $item.attr("data-zoomable", "")
-      }
+const TYPES_TO_SHARPEN = ["png", "jpg", "jpeg"]
+const DEFAULT_USERNAME = "USUARIO"
+//images with higher width are downed to 1200px
+const loadAllImages = async ($, { nodes = [], array = [] }) => {
+  const images = $("img").toArray()
+  for (i in images) {
+    const img = images[i]
+    const $item = $(img)
+    if (i > 0) {
+      $item.attr("data-zoomable", "")
+      $item.attr("class", "border border-dark-05 rounded")
+    }
+    const alt = $item.attr("alt")
+    if (alt) {
       $item.removeAttr("alt")
+      $item.append(`<span class="img-alt">${alt}</span>`)
+    }
+    const styles = $item.attr("title")
+    if (styles) {
       $item.removeAttr("title")
-      await new Promise(async imgSrcChanged => {
-        const mySrc = img.attribs.src
-        const insideQueryIndex = array.indexOf(mySrc)
-        if (insideQueryIndex > -1) {
-          $item.attr("src", nodes[insideQueryIndex].publicURL)
-        } else if (mySrc.includes("googleusercontent")) {
-          await new Promise(done => {
-            nfetch(mySrc)
-              .then(response => {
-                const type = response.headers.get("content-type")
-                return new Promise(sendBuffer => {
-                  response.buffer().then(buffer => {
-                    if (["png", "jpg", "jpeg"].includes(type.replace("image/"))) {
-                      const sharpedImage = sharp(buffer)
-                      return sharpedImage
-                        .metadata()
-                        .then(metadata => {
-                          if (metadata.width > MAX_IMAGE_WIDTH) {
-                            return sharpedImage.resize({
-                              width: MAX_IMAGE_WIDTH,
-                            })
-                          }
-                          return sharpedImage
-                        })
-                        .then(sharpedImage => sharpedImage.toBuffer())
-                        .then(buffer => {
-                          sendBuffer({ buffer, type })
-                        })
-                    }
-                    sendBuffer({ buffer, type })
-                  })
+      $item.attr("style", styles)
+    }
+
+    await new Promise(async imgSrcChanged => {
+      const mySrc = img.attribs.src
+      const insideQueryIndex = array.indexOf(mySrc)
+      if (insideQueryIndex > -1) {
+        $item.attr("src", nodes[insideQueryIndex].publicURL)
+      } else if (mySrc.includes("googleusercontent")) {
+        await new Promise(done => {
+          nfetch(mySrc)
+            .then(response => {
+              const type = response.headers.get("content-type")
+              return new Promise(sendBuffer => {
+                response.buffer().then(buffer => {
+                  if (TYPES_TO_SHARPEN.includes(type.replace("image/"))) {
+                    const sharpedImage = sharp(buffer)
+                    return sharpedImage
+                      .metadata()
+                      .then(metadata => {
+                        if (metadata.width > MAX_IMAGE_WIDTH) {
+                          return sharpedImage.resize({
+                            width: MAX_IMAGE_WIDTH,
+                          })
+                        }
+                        return sharpedImage
+                      })
+                      .then(sharpedImage => sharpedImage.toBuffer())
+                      .then(buffer => {
+                        sendBuffer({ buffer, type })
+                      })
+                  }
+                  sendBuffer({ buffer, type })
                 })
               })
-              .then(({ buffer, type }) => {
-                if (type) {
-                  const base64 = buffer.toString("base64")
-                  $item.attr("src", `data:${type};base64,${base64}`)
-                }
-                done()
-              })
-              .catch(error => {
-                console.error({ error })
-                done()
-              })
-          })
-        }
-        imgSrcChanged()
-      })
-    }
-    completed()
-  })
+            })
+            .then(({ buffer, type }) => {
+              if (type) {
+                const base64 = buffer.toString("base64")
+                $item.attr("src", `data:${type};base64,${base64}`)
+              }
+              done()
+            })
+            .catch(error => {
+              console.error({ error })
+              done()
+            })
+        })
+      }
+      imgSrcChanged()
+    })
+  }
+}
+const getCleanMdURL = (str = "") => {
+  if (/\[.+\]\(.+\)/gu.test(str)) {
+    return str.replace(/\[.+\(|\)/gu, "")
+  }
+  return str
 }
 exports.createPages = async ({ graphql, actions }) => {
   graphql(
@@ -120,14 +135,17 @@ exports.createPages = async ({ graphql, actions }) => {
     for (item of authors.nodes) {
       //Getting all blog authors
       const profile = item.document.path.replace(/\/|about/g, "")
-      const $ = cheerio.load(item.childMarkdownRemark.html)
+      const $ = cheerio.load(item.childMarkdownRemark.html, {
+        decodeEntities: false,
+      })
       await loadAllImages($, allImages)
+      $("script,link").remove()
       let image = `/social.svg`
       const imageSrc = $("img").first().attr("src")
       if (imageSrc) {
         image = imageSrc
       }
-      const config = { image, name: "USUARIO", bio: "NO BIO" }
+      const frontmatter = { image, name: DEFAULT_USERNAME, bio: "NO BIO" }
       $("a")
         .toArray()
         .forEach(e => {
@@ -139,11 +157,11 @@ exports.createPages = async ({ graphql, actions }) => {
           const [prop, ...content] = $(e).html().trim().split(":")
           if (prop && content) {
             if (!/span|class|style/g.test(prop)) {
-              config[prop.toLowerCase().trim()] = content.join(":").trim()
+              frontmatter[prop.toLowerCase().trim()] = content.join(":").trim()
             }
           }
         })
-      profiles[profile] = config
+      profiles[profile] = frontmatter
     }
     for (props of entries.nodes) {
       //Mapping up all entries on Google Docs
@@ -183,17 +201,33 @@ exports.createPages = async ({ graphql, actions }) => {
         })()
         if (frontmatter.ready) {
           await loadAllImages($, allImages)
+          $("script,link").remove()
           frontmatter.tags.forEach(tag => {
             const prevAmount = tags[tag]
             tags[tag] = prevAmount ? prevAmount + 1 : 1
           })
+
+          const encodeMe = t => t.replace(/ /g, "-").replace(/A-z0-0/g, "")
+          $("a,h1,h2,h3,h4")
+            .toArray()
+            .forEach(e => {
+              if (e.attribs.href) {
+                const href = getCleanMdURL(
+                  e.attribs.href.replace(/%5B/g, "[").replace(/%5D/g, "]")
+                )
+                $(e).attr("href", href)
+              }
+              const textIn = $(e).text()
+              $(e).attr("id", encodeMe(textIn))
+              if (!textIn) {
+                $(e).remove()
+              }
+            })
+
           $("pre code")
             .toArray()
             .forEach(e => {
-              let code = $(e).html()
-              if (/\[.+\]\(.+\)/g.test(code)) {
-                code = code.replace(/\[.+\(|\)/g, "")
-              }
+              let code = getCleanMdURL($(e).text())
               let language =
                 e.attribs &&
                 e.attribs.class &&
@@ -215,6 +249,7 @@ exports.createPages = async ({ graphql, actions }) => {
                   )}?autoplay=0&title=0&byline=0&portrait=0`
                 }
                 code = code.replace(/\\/g, "")
+                //removing any char escaping "\""
                 return $(e)
                   .parent()
                   .replaceWith(
@@ -239,28 +274,17 @@ exports.createPages = async ({ graphql, actions }) => {
                 grammar,
                 language
               )
-              $(e).html(html)
+              $(e).text(html)
             })
-          const encodeMe = t => t.replace(/ /g, "-").replace(/A-z0-0/g, "")
-          $("a,h1,h2,h3,h4")
+          $("body > code")
             .toArray()
-            .forEach(e => {
-              if (e.attribs.href) {
-                let href = e.attribs.href
-                  .replace(/%5B/g, "[")
-                  .replace(/%5D/g, "]")
-                if (/\[.+\]\(.+\)/gu.test(href)) {
-                  href = href.replace(/\[.+\(|\)/gu, "")
-                }
-                $(e).attr("href", href)
-              }
-              const textIn = $(e).text()
-              $(e).attr("id", encodeMe(textIn))
-              if (!textIn) {
-                $(e).remove()
-              }
+            .forEach(code => {
+              $code = $(code)
+              $code.html( $code.html({decodeEntities: false}))
             })
-          const $toc = cheerio.load(props.childMarkdownRemark.tableOfContents)
+          const $toc = cheerio.load(props.childMarkdownRemark.tableOfContents, {
+            decodeEntities: false,
+          })
           $toc("a")
             .toArray()
             .forEach((a, index) => {
@@ -284,7 +308,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
           frontmatter.title = (() => {
             const node = $("h1").first()
-            let text = node.html()
+            let text = node.text()
             if (text) {
               node.remove()
               return text
@@ -307,6 +331,8 @@ exports.createPages = async ({ graphql, actions }) => {
           frontmatter.content = $.html()
           frontmatter.path = path
           frontmatter.datesSum = eval(props.document.datesSum)
+
+          //including frontmatter to context
           context.frontmatter = frontmatter
           allPosts.push(context)
           actions.createPage({
@@ -325,12 +351,16 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     PROFILES_KEYS.map(username => {
-      const path = `/blog/${username}`
-      actions.createPage({
-        path,
-        context: profiles[username],
-        component: PATH.resolve(`./src/templates/post-profile.js`),
-      })
+      const profile = profiles[username]
+      if (profile.name != DEFAULT_USERNAME) {
+        //At least username must be provided to create user page
+        const path = `/blog/${username}`
+        actions.createPage({
+          path,
+          context: profile,
+          component: PATH.resolve(`./src/templates/post-profile.js`),
+        })
+      }
     })
   })
 }

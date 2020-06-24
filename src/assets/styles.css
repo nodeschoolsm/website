@@ -8,16 +8,11 @@ body {
 }
 * {
   position: relative;
-  scrollbar-width: thin;
   transition: all 0.09s ease-in-out;
   scroll-behavior: smooth;
   font-family: "Poppins", sans-serif;
   line-height: 1.1;
   outline: none;
-}
-
-::-webkit-scrollbar {
-  display: none;
 }
 h1 {
   font-size: 2rem;
@@ -80,7 +75,7 @@ particle {
   transform: scaleX(0);
   width: 20rem;
   transform-origin: 0 0;
-  transition: transform 0.35s ease-in-out;
+  transition: transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 #nav,
 #video {
@@ -259,4 +254,11 @@ input:focus:invalid,
 textarea:focus:invalid {
   box-shadow: inset 0 0 6px rgba(255, 0, 0, 0.15);
   outline: 1px rgba(255, 0, 0, 0.4) dotted;
+}
+.img-alt {
+  @apply block mx-auto text-xs text-center font-bold text-dark-55 mb-6;
+}
+.medium-zoom-image {
+  padding: 1rem;
+  cursor: pointer !important;
 }

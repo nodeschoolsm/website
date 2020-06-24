@@ -48,7 +48,7 @@ export default ({ className = "" }) => {
           })}
         </div>
         <div className="w-11/12 xl:w-6/12 border-t border-light-10" />
-        <div className="flex w-11/12 xl:w-6/12 text-base mt-4 mb-6 justify-end">
+        <div className="flex w-11/12 xl:w-6/12 text-lg lg:text-base mt-4 mb-6 justify-end">
           <a
             target="_blank"
             href="https://linkedin.com/company/nodeschool-san-miguel"
