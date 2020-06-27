@@ -17,7 +17,7 @@ export default () => {
         ></div>
       </div>
 
-      <Marquee>NODESCHOOL SAN MIGUEL,</Marquee>
+      <Marquee />
       <Footer />
     </div>
   )

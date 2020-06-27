@@ -3,6 +3,7 @@ import Footer from "../components/footer"
 import Burguer from "../components/burguer"
 import Seo from "../components/seo"
 import Marquee from "../components/marquee"
+import HomeContent from "../components/home"
 const logo = require("../assets/image/logo.png")
 
 const particles = e => {
@@ -62,8 +63,8 @@ export default () => {
           window.nav.style.height = `calc(${minNavHeight} - ${
             currentScroll * 0.6
           }px)`
+          window.video.style.opacity = 1.2 - currentScroll / window.innerHeight
         }
-        window.video.style.opacity = 1.2 - currentScroll / window.innerHeight
       }}
       className="flex flex-col max-h-screen overflow-y-auto overflow-x-hidden"
     >
@@ -95,15 +96,23 @@ export default () => {
           <div className="bg-yellow h-2 w-8 absolute top-0 right-0 z-10 mt-4" />
           <video
             id="video"
+            hidden={!isDesktop}
             loop
             style={{
               height: videoHeight,
-              position: isDesktop || "fixed",
             }}
             className="w-full object-cover absolute"
             src={require("../assets/video/home.mp4")}
-            autoPlay={isDesktop}
+            autoPlay
             muted
+          />
+          <img
+            style={{
+              height: "74vh",
+            }}
+            className="w-full object-cover absolute"
+            src={require("../assets/image/video-placeholder.jpg")}
+            hidden={isDesktop}
           />
           <div
             style={{
@@ -124,54 +133,7 @@ export default () => {
               alt="logo"
               style={{ maxWidth: "11rem" }}
             />
-            <h1>Qué hacemos</h1>
-            <p>
-              Somos una comunidad en busca de conocimiento accesible para todas
-              las personas. Colaboramos en esta odisea realizando distinta serie
-              de eventos, nos encargamos de fomentar un espíritu de innovación y
-              el deseo por un continuo aprendizaje en cada uno de estos eventos.
-            </p>
-            <h1>Nuetra misión</h1>
-            <p>
-              Ser una fuente de conocimiento colectivo, motivación, networking y
-              descubrimiento propio para las personas apasionadas al desarrollo
-              y la tecnología.
-            </p>
-            <h1>Nuetra visión</h1>
-            <p>
-              Fomentar un ambiente de conocimiento tecnológico accesible a todas
-              las personas y así potenciar los talentos dentro de este,
-              estableciéndose como una de las mejores comunidades para el
-              desarrollo personal y profesional
-            </p>
-            <h1>Nuestros valores</h1>
-            <p>
-              <b>Aprender a enseñar y enseñar a aprender:</b> En Nodeschool San
-              Miguel sabemos que todos pueden aprender algo de tí y que tú
-              puedes aprender algo de todos, ¡Sí!, todos.
-            </p>
-            <p>
-              <b>Integridad:</b> Se tu mismo, sé un Noder.
-            </p>
-            <p>
-              <b>Igualdad:</b> Como comunidad tecnológica, creemos que el
-              conocimiento debe ser bienvenido y valorado, sin importar de quién
-              venga, ni el status o nivel académico de quien lo brinda. Esto
-              permite que la comunidad sea diversa, no sólo en cuanto a
-              conocimiento, sino también en cuanto a personas y experiencias
-              personales.
-            </p>
-            <p>
-              <b>Trabajo en equipo:</b> La razón por cual existimos es por el
-              trabajo en conjunto que hacemos dentro de la comunidad, por ello
-              siempre nos enfocamos en promover esta cultura en cada uno de
-              nuestros miembros.
-            </p>
-            <p>
-              <b> Diversidad:</b> En Nodeschool San Miguel, nos preocupamos por
-              ofrecer algo nuevo que aprender en distintas temáticas e innovar
-              así la comunidad.
-            </p>
+            <HomeContent />
           </div>
         </div>
       </div>
@@ -211,7 +173,7 @@ export default () => {
             placeholder="Hola comunidad, tengo un comentario que hacer..."
             name="message"
             rows="3"
-          ></textarea>
+          />
           <input
             type="submit"
             value="ENVIAR EMAIL"

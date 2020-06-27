@@ -54,8 +54,8 @@ export default ({ style = {}, className = "" }) => {
             Todos los eventos
           </a>
 
-          <a href="/speakers" className="my-2px">
-            Presentations
+          <a href="/join" className="my-2px">
+            Únete a la comunidad
           </a>
           <a href="/speakers" className="my-2px">
             Event speakers

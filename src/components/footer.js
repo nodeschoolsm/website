@@ -15,7 +15,7 @@ export default ({ className = "" }) => {
       >
         <div className="flex justify-between text-sm sm:text-xs w-full max-w-3xl my-8 flex-wrap sm:flex-no-wrap">
           {[
-            ["Home", "/"],
+            ["Speakers", "/speakers"],
             [
               "Código de conducta",
               "https://github.com/nodeschoolsm/about/blob/master/CoC.md",
@@ -27,7 +27,7 @@ export default ({ className = "" }) => {
               "_blank",
             ],
             ["Mentions", "/mentions"],
-            ["Organizadores", "/organizadores"],
+            ["Organizers", "/organizadores"],
             ["Merch", "/merch"],
           ].map(([text, url = "#", target = "_self"], index) => {
             return [

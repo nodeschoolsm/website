@@ -11,7 +11,7 @@ export default () => {
       <div className="text-center mt-12 font-black text-2xl lg:text-4xl">
         PUBLICA TU ENTRADA
       </div>
-      <p className="text-dark-70 text-sm p-6 mx-auto text-center lg:text-left">
+      <p className="text-dark-70 text-sm p-6 mx-auto text-center">
         Las entradas del blog son hechas por organizadores y miembros de la
         comunidad con los qué estamos completamente agradecidos. Si gustas
         colaborar con una entradas, por favor llena este <b>formulario</b> para
@@ -82,7 +82,7 @@ export default () => {
               type="submit"
               className="bg-dark-05 hover:border-dark-10 flex space-x-2 items-center border-2 border-dark-05 cursor-pointer px-12 py-3 font-bold"
             >
-              <UserAddOutlined className="text-xl" />
+              <UserAddOutlined className="text-2xl" />
               <div>Solicitar acceso</div>
             </button>
           </div>

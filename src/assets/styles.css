@@ -89,7 +89,14 @@ particle {
   opacity: 1;
   transition: opacity 0.65s ease-in-out;
 }
+.blog-entry .cover{
+  transition: all .1s ease-in
+}
+.blog-entry:hover .cover{
+  @apply shadow-inner rounded;
+  filter: contrast(1.3);
 
+}
 /* * BLOG POSTS STYLES */
 .post * {
   @apply font-sans;
@@ -150,11 +157,11 @@ li::marker {
 }
 .post iframe {
   @apply w-full my-4 overflow-auto shadow-xl max-w-3xl;
-  min-height: 400px;
+  min-height: 17rem;
 }
 @screen lg {
   .post iframe {
-    min-height: 480px;
+    min-height: 27rem;
   }
 }
 .post img {
@@ -181,13 +188,13 @@ li::marker {
   padding: 0 2px;
 }
 .post blockquote {
-  @apply w-full max-w-3xl bg-dark-05 border-l-8 italic my-6;
+  @apply w-full bg-dark-05 border-l-8 my-6;
   border-color: #2d7ff9;
 }
 blockquote p {
   @apply px-4 py-6;
   margin-left: 0.3rem;
-  font-size: 1.25rem !important;
+  font-size: 1.2rem !important;
 }
 .post.hider {
   background: linear-gradient(
@@ -225,7 +232,7 @@ blockquote p {
   @apply mb-2;
 }
 .toc .content * {
-  font-size: 11px;
+  font-size: .72rem;
   @apply text-dark-65 font-sans;
 }
 .toc li > ul {

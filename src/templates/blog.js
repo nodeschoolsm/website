@@ -9,7 +9,7 @@ import { AlertOutlined, ControlOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 const items = {
   tag:
-    "px-2 select-none hover:shadow-lg hover:text-dark-70 flex items-center cursor-pointer rounded bg-dark-05 text-dark-55 py-1 text-xs font-bold",
+    "px-2 select-none hover:shadow-lg text-dark-80 hover:text-dark-95 flex items-center cursor-pointer rounded bg-dark-10 py-1 text-xs font-bold",
 }
 const SORT_TYPES = {
   UP: "UP",
@@ -58,11 +58,11 @@ export default ({ pageContext = {} }) => {
       />
       <section className="w-full bg-white">
         <Nav />
-        <div className="mx-auto max-w-3xl px-6 font-bold mb-2 mt-8 flex items-center space-x-1">
+        <div className="mx-auto max-w-5xl px-6 font-bold mb-2 mt-8 flex items-center space-x-1">
           <ControlOutlined />
           <div>FILTROS</div>
         </div>
-        <div className="mx-auto max-w-3xl my-2">
+        <div className="mx-auto max-w-5xl my-2">
           <div className="px-6 py-2 text-xs flex flex-wrap space-x-2 space-y-2 items-center">
             <b>Tags:</b>
             {TAGKEYS.map(text => {
@@ -89,11 +89,11 @@ export default ({ pageContext = {} }) => {
                 </span>
               )
             })}
-            <span onClick={() => setTags({})} className={items.tag}>
-              Deseleccionar todas
-            </span>
             <span onClick={() => setTags({ ...tags })} className={items.tag}>
-              Seleccionar todas
+              Todas
+            </span>
+            <span onClick={() => setTags({})} className={items.tag}>
+              Ninguna
             </span>
           </div>
           <div className="px-6 py-1 text-xs flex flex-wrap space-x-2 space-y-2 items-center">
@@ -120,11 +120,11 @@ export default ({ pageContext = {} }) => {
                 </span>
               )
             })}
-            <span onClick={() => setProfiles([])} className={items.tag}>
-              Deseleccionar todos
-            </span>
             <span onClick={() => setProfiles([...users])} className={items.tag}>
-              Seleccionar todos
+              Todos
+            </span>
+            <span onClick={() => setProfiles([])} className={items.tag}>
+              Ninguno
             </span>
           </div>
           <div className="px-6 py-2 text-xs flex flex-wrap space-x-2 space-y-2 items-center">
@@ -165,8 +165,8 @@ export default ({ pageContext = {} }) => {
                 <a
                   key={path}
                   href={path}
-                  title="Continuar leyendo"
-                  className="border-b hover:shadow-inner border-r block w-full lg:w-1/2 flex flex-col border-dark-10 p-6 border-b-0 hover:border-dark-10 hover:text-dark-90"
+                  title={`Continuar leyendo: ${title}`}
+                  className="border-b blog-entry hover:shadow-inner border-r block w-full lg:w-1/2 flex flex-col border-dark-10 p-6 border-b-0 hover:border-dark-10 hover:text-dark-90"
                 >
                   <div
                     className="w-full"
@@ -175,9 +175,9 @@ export default ({ pageContext = {} }) => {
                     }}
                   >
                     <img
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover cover"
                       src={cover}
-                      alt="cover"
+                      alt={`Cover de ${title}`}
                     />
                   </div>
                   <div className="text-base font-bold mt-6 text-2xl">
@@ -236,7 +236,7 @@ export default ({ pageContext = {} }) => {
         </div>
       </section>
       <RequestBlogAcces />
-      <Marquee/>
+      <Marquee />
       <Footer />
     </div>
   )

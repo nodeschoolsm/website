@@ -7,7 +7,11 @@ export default () => {
   return (
     <nav className="z-10 shadow bg-white w-full flex items-center sticky top-0">
       <Burguer style={{ minWidth: "4rem" }} className="z-1 sticky top-0" />
-      <a href={`/${basePath}`} className="text-black font-bold mx-8 uppercase">
+      <a
+        href={`/${basePath}`}
+        target="_self"
+        className="text-black font-bold mx-8 uppercase"
+      >
         {basePath}
       </a>
       <div

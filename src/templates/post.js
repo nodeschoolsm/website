@@ -116,7 +116,7 @@ export default ({ pageContext = {}, path }) => {
           <a href={`/blog/${username}`} className="-mt-8 mb-3">
             <img
               title="Ver perfil"
-              className="object-cover shadow rounded h-32 w-32 lg:h-40 lg:h-40 bg-white"
+              className="object-cover shadow rounded h-32 w-32 lg:h-40 lg:w-40 bg-white"
               src={profile.image}
               alt={username}
             />

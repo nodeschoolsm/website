@@ -9,6 +9,7 @@ import { CommentCount } from "disqus-react"
 import { CommentOutlined, FormOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 export default ({ pageContext = {} }) => {
+  console.log({ pageContext })
   const { bio, image, name, posts = [] } = pageContext
   const totalPosts = posts.length
   return (
@@ -37,7 +38,7 @@ export default ({ pageContext = {} }) => {
         </div>
         <div hidden={totalPosts <= 0} className="mt-24 text-dark-80">
           <div className="uppercase py-4 px-6 text-xl border-dark-10 border-t border-b font-bold flex items-center justify-end space-x-2">
-            <div>MIS ENTRADAS</div>
+            <div>COLABORACIONES</div>
             <FormOutlined />
           </div>
           {posts.map(({ frontmatter = {} }) => {
@@ -53,8 +54,8 @@ export default ({ pageContext = {} }) => {
               <a
                 key={path}
                 href={path}
-                title="Continuar leyendo"
-                className="border-b block border-dark-10 p-6 border-b-0 hover:border-dark-10 hover:text-dark-90"
+                title={`Continuar leyendo: ${title}`}
+                className="border-b block border-dark-10 p-6 hover:border-dark-10"
               >
                 <div>
                   <div className="text-xl font-bold">{title}</div>
