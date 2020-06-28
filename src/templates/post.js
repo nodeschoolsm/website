@@ -41,8 +41,7 @@ export default ({ pageContext = {}, path }) => {
     <div
       onScroll={e => {
         const scrollAmount = e.currentTarget.scrollTop
-        window.postCover.style.opacity =
-          0.05 + scrollAmount / window.innerHeight
+        window.postCover.style.opacity = 0.1 + scrollAmount / window.innerHeight
         const itemTop = window.author.offsetTop
         const startHeight = window.innerHeight
         const result = ((scrollAmount + startHeight) / itemTop) * 100
@@ -65,7 +64,7 @@ export default ({ pageContext = {}, path }) => {
           <div
             id="postCover"
             className="absolute inset-0 bg-black z-1"
-            style={{ opacity: 0.3 }}
+            style={{ opacity: 0.1 }}
           />
           <img className="w-full" src={cover} alt="cargando..." />
         </div>

@@ -9,10 +9,24 @@ import { CommentCount } from "disqus-react"
 import { CommentOutlined, FormOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 export default ({ pageContext = {} }) => {
-  const { bio, image, name, posts = [] } = pageContext
+  const { bio, image, name, posts = [], username = "" } = pageContext
   const totalPosts = posts.length
   return (
     <div className="w-full max-h-screen overflow-x-hidden overflow-y-auto bg-white">
+      <div
+        style={{ transform: "rotate(-30deg) scale(1.6)" }}
+        className="absolute w-full items-center justify-center top-0 left-0 flex flex-wrap uppercase"
+      >
+        {[...Array(45)].map((_, i) => (
+          <div
+            key={`username-item-bg-${username}-${i}`}
+            className="font-black select-none"
+            style={{ fontSize: "3.2vmax", margin: ".42rem", opacity: 0.016 }}
+          >
+            {username}
+          </div>
+        ))}
+      </div>
       <Helmet>
         <base target="_blank" rel="noopener noreferrer" />
       </Helmet>
@@ -35,7 +49,10 @@ export default ({ pageContext = {} }) => {
             <Socials pageContext={pageContext} />
           </div>
         </div>
-        <div hidden={totalPosts <= 0} className="mt-24 text-dark-80">
+        <div
+          hidden={totalPosts <= 0}
+          className="mt-24 text-dark-80"
+        >
           <div className="uppercase py-4 px-6 text-xl border-dark-10 border-t border-b font-bold flex items-center justify-end space-x-2">
             <div>COLABORACIONES</div>
             <FormOutlined />

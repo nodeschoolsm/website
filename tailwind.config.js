@@ -6,16 +6,12 @@ const light = { full: "white" }
   light[amount.split(".")[1]] = `rgba(255,255,255,${amount})`
 })
 const pxHelpers = {}
-;[...Array(5)].map((e, i) => {
+;[...Array(5)].map((_, i) => {
   const name = `${i + 1}px`
   pxHelpers[name] = name
 })
 module.exports = {
-  purge: [
-    "./src/pages/**/*.js",
-    "./src/templates/*.js",
-    "./src/components/*.js",
-  ],
+  purge: ["./src/**/*.js"],
   theme: {
     extend: {
       width: pxHelpers,

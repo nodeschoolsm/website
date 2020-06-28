@@ -17,6 +17,7 @@ const loadAllImages = async ($, { nodes = [], array = [] }) => {
     const $item = $(img)
     if (i > 0) {
       $item.attr("data-zoomable", "")
+      $item.attr("loading","lazy")
       $item.attr("class", "border border-dark-05 rounded")
     }
     if (alt) {
@@ -81,7 +82,7 @@ const getCleanMdURL = (str = "") => {
 }
 const getTocURL = t => t.replace(/ /g, "-").replace(/[^A-z0-9-_]/g, "")
 const embed = src => {
-  return `<iframe width="100%" height="225" src="${src}" frameborder="0" allow="same-origin; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; scripts" allowfullscreen></iframe>`
+  return `<iframe loading="lazy" width="100%" height="225" src="${src}" frameborder="0" allow="same-origin; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; scripts" allowfullscreen></iframe>`
 }
 const sanitize = $ => {
   $("script, link, style, meta").remove()
