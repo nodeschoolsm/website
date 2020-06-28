@@ -68,7 +68,7 @@ export default ({ pageContext = {}, path }) => {
               background: "rgba(0,0,0,.12)",
             }}
           />
-          <img className="w-full" src={cover} alt="cargando..." />
+          <img className="w-full bg-black" src={cover} alt="cargando..." />
         </div>
         <div className="p-6 lg:p-16 max-w-6xl mx-auto">
           <h1 className="uppercase text-2xl xl:text-5xl m-0 font-sans">
