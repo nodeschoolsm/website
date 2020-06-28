@@ -10,10 +10,6 @@ const DEFAULT_USERNAME = "USUARIO"
 //! images with higher width are resized down to 864px
 const loadAllImages = async ($, { nodes = [], array = [] }) => {
   const images = $("img").toArray()
-  $("script,style,link,meta").each((_, item) => {
-    //First , let's clean up any custom style and script tag
-    $(item).remove()
-  })
   for (i in images) {
     const img = images[i]
     const { src, alt, title } = img.attribs
@@ -87,6 +83,10 @@ const getTocURL = t => t.replace(/ /g, "-").replace(/[^A-z0-9-_]/g, "")
 const embed = src => {
   return `<iframe width="100%" height="225" src="${src}" frameborder="0" allow="same-origin; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; scripts" allowfullscreen></iframe>`
 }
+const sanitize = $ => {
+  $("script, link, style, meta").remove()
+  return $
+}
 exports.createPages = async ({ graphql, actions }) => {
   await graphql(
     `
@@ -150,6 +150,7 @@ exports.createPages = async ({ graphql, actions }) => {
         image = imageSrc
       }
       const frontmatter = { image, name: DEFAULT_USERNAME, bio: "NO BIO" }
+      sanitize($)
       $("p").each((_, e) => {
         const [prop, ...content] = $(e).html().trim().split(":")
         if (prop && content) {
@@ -307,7 +308,9 @@ exports.createPages = async ({ graphql, actions }) => {
           const contextWithoutContent = JSON.parse(JSON.stringify(context)) //deep cloning context
           context.frontmatter.content = pako.deflate(
             JSON.stringify({
-              html: $.html().replace(/%5C_|\\_/gu, "_"),
+              html: sanitize($)
+                .html()
+                .replace(/%5C_|\\_/gu, "_"),
               /* GDocs escapes \ on URL's, so lets replace em */
             }),
             { to: "string" }
