@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import Footer from "../components/footer"
 import Burguer from "../components/burguer"
 import Marquee from "../components/marquee"
@@ -6,6 +6,7 @@ import Seo from "../components/seo"
 import { ReadOutlined } from "@ant-design/icons"
 import { DiscussionEmbed } from "disqus-react"
 import Socials from "../components/socials"
+const pako = require("pako")
 const VOIDED = `<html><head></head><body></body></html>`
 const getVoidContentTemplate = username => `
 <h1>ENTRADA VACÍA</h1>
@@ -27,8 +28,16 @@ export default ({ pageContext = {}, path }) => {
     description,
     toc,
   } = frontmatter
+  const parsedContent = useMemo(
+    () => JSON.parse(pako.inflate(content, { to: "string" })),
+    [content]
+  )
+  //Getting uncompresed html from Pako
   const contentToRender =
-    content == VOIDED ? getVoidContentTemplate(username) : content
+    parsedContent.html == VOIDED
+      ? getVoidContentTemplate(username)
+      : parsedContent.html
+
   return (
     <div
       onScroll={e => {
@@ -43,11 +52,11 @@ export default ({ pageContext = {}, path }) => {
       className="w-full max-h-screen overflow-x-hidden overflow-y-auto"
     >
       <Seo title={`Blog | ${title}`} image={cover} description={description} />
-      <nav className="absolute xl:fixed top-0 left-0 z-20" id="top">
+      <nav className="absolute xl:fixed top-0 left-0 z-20">
         <Burguer />
       </nav>
 
-      <div className="bg-white">
+      <div className="bg-white" id="top">
         <div
           className="w-full overflow-hidden flex items-end"
           style={{ minHeight: "10rem" }}
@@ -63,7 +72,9 @@ export default ({ pageContext = {}, path }) => {
           <img className="w-full" src={cover} alt="cargando..." />
         </div>
         <div className="p-6 lg:p-16 max-w-6xl mx-auto">
-          <h1 className="uppercase text-2xl xl:text-5xl m-0 font-sans">{title}</h1>
+          <h1 className="uppercase text-2xl xl:text-5xl m-0 font-sans">
+            {title}
+          </h1>
         </div>
       </div>
       <div className="bg-yellow lg:bg-white lg:-mt-16">
@@ -149,7 +160,7 @@ export default ({ pageContext = {}, path }) => {
         />
       </div>
 
-      <Marquee/>
+      <Marquee />
       <Footer />
     </div>
   )

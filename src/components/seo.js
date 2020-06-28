@@ -10,6 +10,7 @@ export default ({
   description = DESCRIPTION,
   image = IMAGE,
 }) => {
+  image = image.includes("http") ? image : `${URL}${image}`
   const { pathname = "/" } = useLocation()
   const url = `${URL}${pathname}`
   const metaTags = [

@@ -9,7 +9,6 @@ import { CommentCount } from "disqus-react"
 import { CommentOutlined, FormOutlined } from "@ant-design/icons"
 import Seo from "../components/seo"
 export default ({ pageContext = {} }) => {
-  console.log({ pageContext })
   const { bio, image, name, posts = [] } = pageContext
   const totalPosts = posts.length
   return (

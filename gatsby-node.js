@@ -3,12 +3,15 @@ const cheerio = require("cheerio")
 const Prism = require("prismjs")
 const fetch = require("node-fetch")
 const sharp = require("sharp")
-const MAX_IMAGE_WIDTH = 840
+const pako = require("pako")
+const MAX_IMAGE_WIDTH = 864
 const TYPES_TO_SHARPEN = ["png", "jpg", "jpeg"]
 const DEFAULT_USERNAME = "USUARIO"
-//images with higher width are downed to 840px
+//! images with higher width are resized down to 864px
 const loadAllImages = async ($, { nodes = [], array = [] }) => {
   const images = $("img").toArray()
+  //First , let's clean up any custom style and script tag
+  $("script,style,link,meta").remove()
   for (i in images) {
     const img = images[i]
     const { src, alt, title } = img.attribs
@@ -35,7 +38,7 @@ const loadAllImages = async ($, { nodes = [], array = [] }) => {
             const type = response.headers.get("content-type")
             return new Promise(sendBuffer => {
               response.buffer().then(buffer => {
-                if (TYPES_TO_SHARPEN.includes(type.replace("image/"))) {
+                if (TYPES_TO_SHARPEN.includes(type.replace("image/", ""))) {
                   const sharpedImage = sharp(buffer)
                   return sharpedImage
                     .metadata()
@@ -47,8 +50,16 @@ const loadAllImages = async ($, { nodes = [], array = [] }) => {
                       }
                       return sharpedImage
                     })
+                    .then(sharpedImage =>
+                      sharpedImage.png({
+                        quality: 70,
+                        force: true,
+                        adaptiveFiltering: true,
+                        progressive: true,
+                      })
+                    )
                     .then(sharpedImage => sharpedImage.toBuffer())
-                    .then(buffer => sendBuffer({ buffer, type }))
+                    .then(buffer => sendBuffer({ buffer, type: "png" }))
                 }
                 sendBuffer({ buffer, type })
               })
@@ -64,11 +75,13 @@ const loadAllImages = async ($, { nodes = [], array = [] }) => {
   }
 }
 const getCleanMdURL = (str = "") => {
+  //If (markdownLike)[link] clean it to [link] only
   if (/\[.+\]\(.+\)/gu.test(str)) {
     return str.replace(/\[.+\(|\)/gu, "")
   }
   return str
 }
+const getTocURL = t => t.replace(/ /g, "-").replace(/[^A-z0-9-_]/g, "")
 const embed = src => {
   return `<iframe width="100%" height="225" src="${src}" frameborder="0" allow="same-origin; accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; scripts" allowfullscreen></iframe>`
 }
@@ -123,41 +136,31 @@ exports.createPages = async ({ graphql, actions }) => {
       array: imgURLS.nodes.map(({ relativePath }) => relativePath),
     }
     for (item of authors.nodes) {
-      //Getting all blog authors
+      //Getting all in blog authors
       const profile = item.document.path.replace(/\/|about/g, "")
-      const $ = cheerio.load(item.childMarkdownRemark.html, {
-        decodeEntities: false,
-      })
+      const $ = cheerio.load(item.childMarkdownRemark.html)
       await loadAllImages($, allImages)
-      $("script,link").remove()
+      //Cleaning any in bio URL and replacing with text only
+      $("a").each((_, a) => $(a).replaceWith(a.attribs.href))
       let image = `/social.svg`
-      const imageSrc = $("img").first().attr("src")
+      const imageSrc = $("img").attr("src")
       if (imageSrc) {
         image = imageSrc
       }
       const frontmatter = { image, name: DEFAULT_USERNAME, bio: "NO BIO" }
-      $("a")
-        .toArray()
-        .forEach(e => {
-          $(e).replaceWith($(e).text().trim())
-        })
-      $("p")
-        .toArray()
-        .forEach(e => {
-          const [prop, ...content] = $(e).html().trim().split(":")
-          if (prop && content) {
-            if (!/span|class|style/g.test(prop)) {
-              frontmatter[prop.toLowerCase().trim()] = content.join(":").trim()
-            }
+      $("p").each((_, e) => {
+        const [prop, ...content] = $(e).html().trim().split(":")
+        if (prop && content) {
+          if (!/span|class|style/g.test(prop)) {
+            frontmatter[prop.toLowerCase().trim()] = content.join(":").trim()
           }
-        })
+        }
+      })
       profiles[profile] = frontmatter
     }
     for (props of entries.nodes) {
       //Mapping up all entries on Google Docs
-      const $ = cheerio.load(props.childMarkdownRemark.html, {
-        decodeEntities: false,
-      })
+      const $ = cheerio.load(props.childMarkdownRemark.html)
       let path = props.document.path
       const [_, username, id] = props.document.path.split("/")
       if (id !== "about") {
@@ -168,11 +171,11 @@ exports.createPages = async ({ graphql, actions }) => {
           frontmatter: {},
         }
         const frontmatter = (() => {
+          //Getting initial frontmatter
           let state = { tags: ["no-tags"], ready: "false" }
-          const item = $("pre code").first()
-          if (item.text()) {
-            const config = item.html().trim().split("\n")
-            item.parent().remove()
+          const $tag = $("pre code").first()
+          if ($tag.text()) {
+            const config = $tag.text().trim().split("\n")
             config.map(item => {
               const [head = "", content = ""] = item.split(":")
               const prop = head.trim().toLowerCase()
@@ -180,157 +183,134 @@ exports.createPages = async ({ graphql, actions }) => {
               if (prop && content) {
                 if (content.includes(",")) {
                   state[prop] = value.split(",").map(e => e.trim())
-                } else {
-                  state[prop] = value.trim()
-                }
+                } else state[prop] = value.trim()
               }
             })
+            $tag.parent().remove()
           }
-          state.ready = state.ready.includes("true")
+          state.ready = /true/.test(state.ready)
           return state
         })()
         if (frontmatter.ready) {
+          //Append blog post only if ready
           await loadAllImages($, allImages)
-          $("script,link").remove()
           frontmatter.tags.forEach(tag => {
             const prevAmount = tags[tag]
             tags[tag] = prevAmount ? prevAmount + 1 : 1
           })
-          const encodeMe = t => t.replace(/ /g, "-").replace(/A-z0-0/g, "")
-          $("a,h1,h2,h3,h4")
-            .toArray()
-            .forEach(e => {
-              if (e.attribs.href) {
-                const href = getCleanMdURL(
-                  e.attribs.href.replace(/%5B/g, "[").replace(/%5D/g, "]")
-                )
-                $(e).attr("href", href)
-              }
-              const textIn = $(e).text()
-              $(e).attr("id", encodeMe(textIn))
-              if (!textIn) {
-                $(e).remove()
-              }
-            })
-          $("iframe")
-            .toArray()
-            .forEach(iframe => {
-              $iframe = $(iframe)
-              $iframe.replaceWith(embed($iframe.attr("src")))
-            })
-          $("pre code")
-            .toArray()
-            .forEach(e => {
-              let code = getCleanMdURL($(e).text())
-              let language =
-                e.attribs &&
-                e.attribs.class &&
-                e.attribs.class.replace("language-", "")
-              if (language == "gif") {
-                return $(e).parent().replaceWith(`<img src="${code}"/>`)
-              }
-              if (["video", "iframe"].includes(language)) {
-                const getLastUrlPiece = code =>
-                  code.split("/").splice(-1, 1)[0].replace(/\\/g, "")
-                if (code.includes("youtube")) {
-                  code = `https://www.youtube-nocookie.com/embed/${getLastUrlPiece(
-                    code
-                  ).replace("watch?v=", "")}`
-                }
-                if (code.includes("vimeo")) {
-                  code = `https://player.vimeo.com/video/${getLastUrlPiece(
-                    code
-                  )}?autoplay=0&title=0&byline=0&portrait=0`
-                }
-                code = code.replace(/\\/g, "")
-                //removing any char escaping "\""
-                return $(e).parent().replaceWith(embed(code))
-              }
-              let grammar = Prism.languages.markup
-              if (language in Prism.languages) {
-                grammar = Prism.languages[language]
-              } else {
-                language = "markup"
-              }
-              const T = "__LINE__"
-              const html = Prism.highlight(
-                code
-                  .replace(/\n{8,}/g, T.repeat(3))
-                  .replace(/\n{5,}/g, T.repeat(2))
-                  .replace(/\n{2,}/g, T)
-                  .replace(new RegExp(T, "g"), "\n")
-                  .replace(/\\\*/g, "*")
-                  .replace(/\/`/g, "`"),
-                grammar,
-                language
-              )
-              $(e).text(html)
-            })
-          $("body > code")
-            .toArray()
-            .forEach(code => {
-              $code = $(code)
-              $code.html($code.html({ decodeEntities: false }))
-            })
-          const $toc = cheerio.load(props.childMarkdownRemark.tableOfContents, {
-            decodeEntities: false,
+          $("a").each((_, a) => {
+            //cleaning linking inside href,a things
+            $a = $(a)
+            $a.attr("href", getCleanMdURL($a.attr("href")))
           })
-          $toc("a")
-            .toArray()
-            .forEach((a, index) => {
-              const isFirst = index == 0
-              $toc(a).attr(
-                "href",
-                isFirst ? "#top" : "#" + encodeMe($toc(a).text())
-              )
-            })
-
-          frontmatter.timeToRead = props.childMarkdownRemark.timeToRead
-          const _createdTime = props.document.createdTime
-          frontmatter.createdTime =
-            _createdTime[0].toUpperCase() + _createdTime.substr(1)
-          frontmatter.toc = (() => {
-            if ($toc("a").first().text()) {
-              return $toc.html()
+          $("h1,h2,h3,h4").each((_, e) => {
+            const $e = $(e)
+            const textIn = $e.text()
+            if (!textIn) {
+              $e.remove()
+            } else $e.attr("id", getTocURL(textIn))
+          })
+          $("iframe").each((_, iframe) => {
+            //We don't want pals to mess around with custom iframes
+            $iframe = $(iframe)
+            $iframe.replaceWith(embed($iframe.attr("src")))
+          })
+          $("pre code").each((_, e) => {
+            //Custom blocks
+            let code = getCleanMdURL($(e).text())
+            console.log({ code })
+            let language =
+              e.attribs &&
+              e.attribs.class &&
+              e.attribs.class.replace("language-", "")
+            if (language == "embed") {
+              const getLastUrlPiece = str => str.split("/").splice(-1, 1)[0]
+              if (/youtube/.test(code)) {
+                code = `https://www.youtube-nocookie.com/embed/${getLastUrlPiece(
+                  code
+                ).replace("watch?v=", "")}`
+              }
+              if (/vimeo/.test(code)) {
+                code = `https://player.vimeo.com/video/${getLastUrlPiece(
+                  code
+                )}?autoplay=0&title=0&byline=0&portrait=0`
+              }
+              //removing any char escaping "\""
+              code = code.replace(/\\/g, "")
+              return $(e).parent().replaceWith(embed(code))
             }
-            return ""
+            //now we are handling real piece of code
+            let grammar = Prism.languages.markup
+            if (language in Prism.languages) {
+              grammar = Prism.languages[language]
+            } else language = "markup"
+            const T = "___LINE___" /* Naming void(" ") */
+            const highlightedCode = Prism.highlight(
+              code
+                .replace(/\n{8,}/g, T.repeat(3))
+                .replace(/\n{5,}/g, T.repeat(2))
+                .replace(/\n{2,}/g, T)
+                .replace(new RegExp(T, "g"), "\n")
+                .replace(/\\\*/g, "*")
+                .replace(/\/`/g, "`"),
+              grammar,
+              language
+            )
+            $(e).html(highlightedCode)
+          })
+          /*
+           * Most of ontent is inside a Self invoking function to make
+           * block like separation for frontmatter props
+           */
+          frontmatter.timeToRead = props.childMarkdownRemark.timeToRead
+          frontmatter.createdTime = (() => {
+            const createdAt = props.document.createdTime
+            return createdAt[0].toUpperCase() + createdAt.substr(1)
           })()
-
+          frontmatter.toc = (() => {
+            //Table of content url cleaning
+            const $ = cheerio.load(props.childMarkdownRemark.tableOfContents)
+            let containsAtLeastOne = 0
+            $("a").each((index, a) => {
+              const $a = $(a)
+              ++containsAtLeastOne
+              const isFirst = index == 0
+              $a.attr("href", isFirst ? "#top" : "#" + getTocURL($a.text()))
+            })
+            return containsAtLeastOne ? $.html() : ""
+          })()
           frontmatter.title = (() => {
-            const node = $("h1").first()
-            let text = node.text()
+            const text = $("h1").first().text()
             if (text) {
-              node.remove()
+              $("h1").first().remove()
               return text
             }
             return "Sín titulo"
           })()
           frontmatter.cover = (() => {
-            const node = $("img").first()
-            if (node.attr("src")) {
-              const URL = node.attr("src")
-              node.closest("p").remove()
-              return URL
+            const src = $("img").first().attr("src")
+            if (src) {
+              $("img").first().closest("p").remove()
+              return src
             }
             return PATH.resolve(`/cover.jpg`)
           })()
           frontmatter.description = (() => {
-            const firstP = $("p").first().text()
-            return firstP ? firstP : "Sín descripción"
+            const firstParagraph = $("p").first().text()
+            return firstParagraph ? firstParagraph : "Sín descripción"
           })()
-          frontmatter.content = $.html()
           frontmatter.path = path
           frontmatter.datesSum = eval(props.document.datesSum)
-
           //including frontmatter to context
           context.frontmatter = frontmatter
-          const contextWithoutContent = (() => {
-            const clone =  JSON.parse(JSON.stringify(context))
-            //deep copy of context
-            clone.frontmatter.content = null
-            clone.frontmatter.toc = null
-            return clone
-          })()
+          const contextWithoutContent = JSON.parse(JSON.stringify(context)) //deep cloning context
+          context.frontmatter.content = pako.deflate(
+            JSON.stringify({
+              html: $.html().replace(/%5C_|\\_/gu, "_"),
+              /* GDocs escapes \ on URL's, so lets replace em */
+            }),
+            { to: "string" }
+          )
           const prevPostsByUser = postsByUser[username]
           postsByUser[username] = prevPostsByUser
             ? [...prevPostsByUser, contextWithoutContent]
