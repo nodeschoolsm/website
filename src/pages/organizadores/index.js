@@ -1,5 +1,6 @@
 import React from "react"
+import Layout from "../../components/layout"
 
 export default () => {
-  return <div>ORGANIZADORES</div>
+  return <Layout>Organizadores y colaboradores</Layout>
 }

@@ -90,6 +90,7 @@ const sanitize = $ => {
   $("script, link, style, meta").remove()
   return $
 }
+
 exports.createPages = async ({ graphql, actions }) => {
   await graphql(
     `

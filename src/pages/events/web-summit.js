@@ -1,5 +1,6 @@
 import React from "react"
+import Layout from "../../components/layout"
 
 export default () => {
-  return <div>WEB S</div>
+  return <Layout>Web Summit</Layout>
 }

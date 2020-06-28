@@ -9,6 +9,13 @@ module.exports = {
         ignore: [`**/*.js`],
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/assets/cafedigitalsv/episodios/`,
+        name: "cafeEpisodios"
+      },
+    },
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-google-docs`,
