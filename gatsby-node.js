@@ -10,8 +10,10 @@ const DEFAULT_USERNAME = "USUARIO"
 //! images with higher width are resized down to 864px
 const loadAllImages = async ($, { nodes = [], array = [] }) => {
   const images = $("img").toArray()
-  //First , let's clean up any custom style and script tag
-  $("script,style,link,meta").remove()
+  $("script,style,link,meta").each((_, item) => {
+    //First , let's clean up any custom style and script tag
+    $(item).remove()
+  })
   for (i in images) {
     const img = images[i]
     const { src, alt, title } = img.attribs
@@ -218,7 +220,6 @@ exports.createPages = async ({ graphql, actions }) => {
           $("pre code").each((_, e) => {
             //Custom blocks
             let code = getCleanMdURL($(e).text())
-            console.log({ code })
             let language =
               e.attribs &&
               e.attribs.class &&

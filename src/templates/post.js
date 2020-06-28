@@ -37,13 +37,12 @@ export default ({ pageContext = {}, path }) => {
     parsedContent.html == VOIDED
       ? getVoidContentTemplate(username)
       : parsedContent.html
-
   return (
     <div
       onScroll={e => {
         const scrollAmount = e.currentTarget.scrollTop
         window.postCover.style.opacity =
-          0.15 + scrollAmount / window.innerHeight
+          0.05 + scrollAmount / window.innerHeight
         const itemTop = window.author.offsetTop
         const startHeight = window.innerHeight
         const result = ((scrollAmount + startHeight) / itemTop) * 100
@@ -55,7 +54,6 @@ export default ({ pageContext = {}, path }) => {
       <nav className="absolute xl:fixed top-0 left-0 z-20">
         <Burguer />
       </nav>
-
       <div className="bg-white" id="top">
         <div
           className="w-full overflow-hidden flex items-end"
