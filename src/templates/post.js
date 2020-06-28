@@ -28,20 +28,16 @@ export default ({ pageContext = {}, path }) => {
     description,
     toc,
   } = frontmatter
-  const parsedContent = useMemo(
-    () => JSON.parse(pako.inflate(content, { to: "string" })),
-    [content]
-  )
+  const parsedContent = useMemo(() => pako.inflate(content, { to: "string" }), [
+    content,
+  ])
   //Getting uncompresed html from Pako
   const contentToRender =
-    parsedContent.html == VOIDED
-      ? getVoidContentTemplate(username)
-      : parsedContent.html
+    parsedContent == VOIDED ? getVoidContentTemplate(username) : parsedContent
   return (
     <div
       onScroll={e => {
         const scrollAmount = e.currentTarget.scrollTop
-        window.postCover.style.opacity = 0.1 + scrollAmount / window.innerHeight
         const itemTop = window.author.offsetTop
         const startHeight = window.innerHeight
         const result = ((scrollAmount + startHeight) / itemTop) * 100
@@ -58,13 +54,19 @@ export default ({ pageContext = {}, path }) => {
           className="w-full overflow-hidden flex items-end"
           style={{ minHeight: "10rem" }}
         >
-          <div className="absolute hidden lg:block text-light-70 bottom-0 uppercase text-sm right-0 z-10 p-6">
+          <div
+            style={{ mixBlendMode: "color-dodge" }}
+            className="absolute hidden lg:block text-light-70 bottom-0 uppercase text-sm right-0 z-10 p-6"
+          >
             {createdTime}, <b>{timeToRead}min</b>
           </div>
           <div
             id="postCover"
-            className="absolute inset-0 bg-black z-1"
-            style={{ opacity: 0.1 }}
+            className="absolute inset-0 z-1"
+            style={{
+              boxShadow: "inset 0 -3.5rem 5rem 0 rgba(0,0,0,.5)",
+              background: "rgba(0,0,0,.12)",
+            }}
           />
           <img className="w-full" src={cover} alt="cargando..." />
         </div>

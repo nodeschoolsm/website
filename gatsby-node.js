@@ -17,7 +17,7 @@ const loadAllImages = async ($, { nodes = [], array = [] }) => {
     const $item = $(img)
     if (i > 0) {
       $item.attr("data-zoomable", "")
-      $item.attr("loading","lazy")
+      $item.attr("loading", "lazy")
       $item.attr("class", "border border-dark-05 rounded")
     }
     if (alt) {
@@ -50,23 +50,25 @@ const loadAllImages = async ($, { nodes = [], array = [] }) => {
                       return sharpedImage
                     })
                     .then(sharpedImage =>
-                      sharpedImage.png({
-                        quality: 70,
-                        force: true,
-                        adaptiveFiltering: true,
-                        progressive: true,
-                      })
+                      sharpedImage
+                        .flatten({ background: { r: 255, g: 255, b: 255 } })
+                        .jpeg({
+                          quality: 75,
+                          force: true,
+                          progressive: true,
+                        })
                     )
                     .then(sharpedImage => sharpedImage.toBuffer())
-                    .then(buffer => sendBuffer({ buffer, type: "png" }))
+                    .then(buffer => sendBuffer({ buffer, type: "jpeg" }))
                 }
                 sendBuffer({ buffer, type })
               })
             })
           })
           .then(({ buffer, type }) => {
-            const base64 = buffer.toString("base64")
-            done($item.attr("src", `data:${type};base64,${base64}`))
+            const content = buffer.toString("base64")
+            $item.attr("new-src", JSON.stringify({ content, type }))
+            done($item.attr("src", "/loader.gif"))
           })
           .catch(error => done(console.error({ error })))
       })
@@ -308,14 +310,11 @@ exports.createPages = async ({ graphql, actions }) => {
           context.frontmatter = frontmatter
           const contextWithoutContent = JSON.parse(JSON.stringify(context)) //deep cloning context
           context.frontmatter.content = pako.deflate(
-            JSON.stringify({
-              html: sanitize($)
-                .html()
-                .replace(/%5C_|\\_/gu, "_"),
-              /* GDocs escapes \ on URL's, so lets replace em */
-            }),
+            sanitize($)
+              .html()
+              .replace(/%5C_|\\_/gu, "_"),
             { to: "string" }
-          )
+          ) // GDocs escapes \ on URL's, so lets replace em
           const prevPostsByUser = postsByUser[username]
           postsByUser[username] = prevPostsByUser
             ? [...prevPostsByUser, contextWithoutContent]
@@ -326,6 +325,7 @@ exports.createPages = async ({ graphql, actions }) => {
             context,
             component: PATH.resolve(`./src/templates/post.js`),
           })
+          actions.removePageData({ id: path })
         }
       }
     }
