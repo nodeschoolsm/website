@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react"
 import Layout from "../../components/layout"
+import Marquee from "../../components/marquee"
+import Seo from "../../components/seo"
 import { graphql } from "gatsby"
+const DESCRIPTION = `Un espacio para hablar y discutir sobre temas
+que están a la vanguardia sobre tecnología, experiencias en el mundo
+laboral y profesional junto a los miembros de la comunidad de
+NodeSchool San Miguel.`
 export default ({ data }) => {
   const [episodes, setEpisodes] = useState([])
   useEffect(() => {
@@ -23,6 +29,11 @@ export default ({ data }) => {
   }, [data])
   return (
     <Layout>
+      <Seo
+        title="NodeschoolSM |Café Digital SV"
+        description={DESCRIPTION}
+        image={require("../../assets/image/cafedigitalsv/SEO.jpg")}
+      />
       <img
         className="w-full"
         src={require("../../assets/image/cafedigitalsv/cover.png")}
@@ -31,10 +42,7 @@ export default ({ data }) => {
       <div className="bg-dark-10 px-6 py-12 xl:py-24 border-t border-dark-10">
         <div className="max-w-4xl mx-auto">
           <div className="lg:text-xl text-center">
-            <b>Café Digital:</b> Un espacio para hablar y discutir sobre temas
-            que están a la vanguardia sobre tecnología, experiencias en el mundo
-            laboral y profesional junto a los miembros de la comunidad de
-            NodeSchool San Miguel.
+            <b>Café Digital:</b> {DESCRIPTION}
           </div>
         </div>
       </div>
@@ -131,8 +139,7 @@ export default ({ data }) => {
             }}
           />
           <p className="mx-auto -mt-8 md:mt-auto">
-            <i className="text-5xl leading-none">Sí,</i> el Café Digital se
-            graba en vivo en el{" "}
+            🎙️ El Café Digital se graba en vivo en el{" "}
             <a href="https://discord.nodeschoolsm.io">
               <i>Server de Discord de la comunidad</i>
             </a>
@@ -162,7 +169,7 @@ export default ({ data }) => {
             <div className="flex space-x-2">
               <a
                 title="Escuchar en Apple Podcasts"
-                href="https://anchor.fm/cafedigitalsv"
+                href="https://podcasts.apple.com/sv/podcast/caf%C3%A9-digital-sv/id1519631760"
               >
                 <img
                   className="h-10 lg:h-8"
@@ -197,6 +204,7 @@ export default ({ data }) => {
           </div>
         </div>
       </div>
+      <Marquee />
     </Layout>
   )
 }
