@@ -65,9 +65,14 @@ public
 yarn-error.log
 .pnp/
 .pnp.js
+
 # Yarn Integrity file
 .yarn-integrity
 yarn.lock
 .google
 package-lock.json
 dist
+
+# Extra ignores
+.next
+/out
