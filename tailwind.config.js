@@ -3,7 +3,8 @@ const light = {}
 const pxHelpers = {}
 const boxShadow = {}
 const pallete = {
-  yellow: "#FFDE00"
+  yellow: "#FFDE00",
+  grey: "#F5F5F5"
 }
 ;[...Array(18)].map((_, i) => {
   // * dark-05 ~ dark-10 ~ dark-95
