@@ -11,9 +11,10 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "dev": "next dev",
+    "start:book": "start-storybook -p 7777",
+    "build:book": "build-storybook",
+    "start": "next dev",
     "build": "NODE_ENV=production next build && next export",
-    "start": "next start",
     "lint": "eslint ./pages",
     "test": "jest"
   },
@@ -31,6 +32,12 @@
     "husky": "^4.3.0",
     "jest": "^26.4.2",
     "prettier": "^2.1.1",
-    "tailwindcss": "^1.8.8"
+    "tailwindcss": "^1.8.8",
+    "storybook": "^6.0.21",
+    "@storybook/addon-essentials": "^6.0.21",
+    "@storybook/react": "^6.0.21",
+    "style-loader": "^1.2.1",
+    "postcss-loader": "^4.0.0",
+    "css-loader": "^4.2.2"
   }
 }

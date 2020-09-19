@@ -10,7 +10,7 @@ Tanto el website cómo el blog tienen componentes comúnes, estos cómponentes s
 
 ---
 
-Usamos tailwindcss, puedes ver la configuración [acá](https://github.com/nodeschoolsm/website/blob/master/tailwind.config.js)
+Usamos TailwindCSS, puedes ver la configuración [acá](https://github.com/nodeschoolsm/website/blob/master/tailwind.config.js)
 
 Cómo framework JS se usa [NextJS](https://nextjs.org/)
 

@@ -76,10 +76,11 @@ Se modificaron ciertas condiciones de la guia anteriormente sugerida, estas son:
 
 Al contribuir aceptas que tu contenido sea disponible bajo la licencia MIT.
 
-## Código de conducta y FAQ
+## Código de conducta , FAQ y DevDocs
 
 - [CoC](https://github.com/nodeschoolsm/about/blob/master/CoC.md)
 - [FAQ](https://github.com/nodeschoolsm/about/blob/master/FAQ.md)
+- [DOCS](https://github.com/nodeschoolsm/website/tree/master/docs)
 
 ## Por último
 
