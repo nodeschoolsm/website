@@ -31,32 +31,7 @@ Si gustas colaborar elaborando una página/vista del web o blog te recomiendo vi
 
 Para el website y el blog usamos **Nextjs, Tailwindcss y Netlify**, por el momento el equipo organizador elabora los _diseños_ del website y luego nos ponemos a codear. Si gustas enviarnos una mejora visual, no dudes en hacerlo : ( .
 
-**Clonar el repo**
-
-```
-https://github.com/nodeschoolsm/website.git
-```
-
-**Instalar dependencias**
-
-```
-cd website
-yarn install
-```
-
-**Iniciar el modo desarrollo de Next**
-
-```
-yarn dev
-```
-
-Mientras codeas, ejecuta `yarn lint` para evaluar si el código agregado respeta los lineamientos de la guía de estilos.
-
-Al momento de hacer un `commit` o `push` se ejecutarán comandos de lint y testing para push.
-
-**Haciendo push y proponiendo cambios**
-
-Si tu propuesta resuleve un issue [linkealo en tu PR](https://docs.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue). Si no, puedes ir al issue, y proponer el PR cómo solución.
+Hay un poco de documentación de desarrollo en [docs](./docs/README.md)
 
 ## Reporte de errores/bugs/features usando [issues](https://github.com/nodeschoolsm/website/issues)
 
