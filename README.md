@@ -20,10 +20,9 @@ Estamos abiertos a cualquier manera de colaboración para con la comunidad y con
 
 [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-
 Para agregar un issue o listar una tarea se hace uso de plantillas para issues, si tu issue tiene relación la desarrollo de componentes usa la template con prefijo `[BOOK]` , si el issue en cambio es en relación a las plataformas cómo blog o website usa el temlate con prefijo `[DEV]`.
 
-Además es recomendable que te unas al [server de Discord de la comunidad](https://discord.nodeschoolsm.io) para estar pendiente de actualizaciones : )
+Además es recomendable que te unas al [server de Discord de la comunidad](https://discord.nodeschoolsm.io) para estar pendiente de actualizaciones.
 
 ## Dev Docs
 

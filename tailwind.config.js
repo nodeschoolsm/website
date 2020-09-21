@@ -26,7 +26,7 @@ Object.keys(pallete).map((color) => {
   boxShadow[color] = `0 0 0 3px ${value}33`
 })
 module.exports = {
-  purge: ["./pages/**/*.js", "./pages/*.js"],
+  purge: ["./pages/**/*.js", "./pages/*.js", "./components/**/*.js"],
   theme: {
     extend: {
       width: pxHelpers,
@@ -34,13 +34,21 @@ module.exports = {
       zIndex: {
         1: 1
       },
-      boxShadow
+      boxShadow,
+      fontFamily: {
+        poppins: "'Poppins', sans-serif"
+      }
     },
     colors: {
       dark,
       light,
       transparent: "transparent",
       ...pallete
+    },
+    fontWeight: {
+      normal: 400,
+      bold: 600,
+      black: 900
     }
   },
   variants: {

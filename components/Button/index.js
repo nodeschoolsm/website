@@ -1,6 +1,13 @@
 import React from "react"
-
-const Button = () => {
-  return <b className="bg-yellow">Am a button</b>
+import type from "prop-types"
+const Button = ({ className = "font-bold" }) => {
+  return (
+    <button className={`bg-yellow font-poppins ${className}`}>
+      Am a button
+    </button>
+  )
+}
+Button.propTypes = {
+  className: type.string
 }
 export default Button

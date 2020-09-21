@@ -23,7 +23,7 @@ Tanto el website cómo el blog tienen componentes comúnes, estos cómponentes s
 
 ## Naming conventions y Folder structure
 
-Los componentes que estén en la master del repo son los componentes disponibles para ser usados por el website y blog, estos residen en [./components](./components) y se sugiere mantener la siguiente estructura de archivos:
+Los componentes que estén en la master del repo son los componentes disponibles para ser usados por el website y blog, estos residen en [./components](https://github.com/nodeschoolsm/website/tree/master/components) y se sugiere mantener la siguiente estructura de archivos:
 
 ```
 components/
@@ -66,8 +66,17 @@ Para formatear el código respetando la guía de estilos configurada para el lin
 
 El repo tiene husky, en cada commit que realices ejecutará un lint aplicando la configuración del linter y en el push ejecutará el linter y además la secuencia de tests disponibles en el repo.
 
+**[Más información de TailwindCSS](https://github.com/nodeschoolsm/website/blob/master/docs/TailwindCSS.md)**
+
 ## Haciendo PR
 
 Para los PR no existe una template por el momento, lo que si es necesario es agregar un prefijo correspondiente del cambio que se gusta integrar, por ejemplo si es para agregar componentes el prefijo `[BOOK]` , para desarrollo en general `[DEV]`.
 
 De ahí las siempre recomendadas prácticas de hacer commits continuamente, dejar mensajes claros y concisos de que se está agregando y lo más importante,... no tener miedo, dejá llegar tu PR, si te equivocaste, para aprender se hacen las cosas :' )
+
+
+## Recomendaciones
+
+Una que otra ocación ejecutar `test` y `lint` para autoevaluarnos el hecho de pegarnos a la guía de estilos.
+
+Instalar plugins cómo ESLint , Prettier y Jest.
