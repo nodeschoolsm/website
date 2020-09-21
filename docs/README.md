@@ -21,6 +21,38 @@ Tanto el website cómo el blog tienen componentes comúnes, estos cómponentes s
 
 - [Button](./Button.md)
 
+## Instalando dependencias y arrancando
+
+Para instalar dependencias ejecutamos el comando con el que estamos acostumbrados `install`
+
+```
+npm install
+```
+
+Si usas yarn,
+
+```
+yarn install
+```
+
+**Iniciando el proyecto**
+
+```js
+// package.json
+  "scripts": {
+    "start:book": "start-storybook -p 7777",
+    "build:book": "build-storybook",
+    "start": "next dev",
+    "build": "NODE_ENV=production next build && next export",
+    "lint": "eslint ./pages",
+    "test": "jest"
+  },
+```
+
+Si quieres iniciar el modo desarrollo para componentes ejecuta `start:book`, si quieres arrancar el desarrollo para el blog y website hace `npm run start` ó `yarn start`.
+
+Igulamente para probar el resultado final en los comandos build, `build:book` hará un build para storybook y solamente `build` iniciará el build de next para el website y blog.
+
 ## Naming conventions y Folder structure
 
 Los componentes que estén en la master del repo son los componentes disponibles para ser usados por el website y blog, estos residen en [./components](https://github.com/nodeschoolsm/website/tree/master/components) y se sugiere mantener la siguiente estructura de archivos:
@@ -73,7 +105,6 @@ El repo tiene husky, en cada commit que realices ejecutará un lint aplicando la
 Para los PR no existe una template por el momento, lo que si es necesario es agregar un prefijo correspondiente del cambio que se gusta integrar, por ejemplo si es para agregar componentes el prefijo `[BOOK]` , para desarrollo en general `[DEV]`.
 
 De ahí las siempre recomendadas prácticas de hacer commits continuamente, dejar mensajes claros y concisos de que se está agregando y lo más importante,... no tener miedo, dejá llegar tu PR, si te equivocaste, para aprender se hacen las cosas :' )
-
 
 ## Recomendaciones
 

@@ -55,7 +55,7 @@ Al contribuir aceptas que tu contenido sea disponible bajo la licencia MIT.
 
 - [CoC](https://github.com/nodeschoolsm/about/blob/master/CoC.md)
 - [FAQ](https://github.com/nodeschoolsm/about/blob/master/FAQ.md)
-- [DOCS](https://github.com/nodeschoolsm/website/tree/master/docs)
+- [DevDocs](https://github.com/nodeschoolsm/website/tree/master/docs)
 
 ## Por último
 
