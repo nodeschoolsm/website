@@ -1,12 +1,9 @@
 # This workflow will run testing and linter
 
 name: Node CI
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 jobs:
-  dry-render:
+  running-jest-eslint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
