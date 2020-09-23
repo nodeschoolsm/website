@@ -76,3 +76,4 @@ dist
 # Extra ignores
 .next
 /out
+storybook-static

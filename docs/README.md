@@ -11,7 +11,7 @@ Si quieres colaborar con componentes busca los issues que comiencen con el prefi
 
 Si lo que gustas es colaborar con una pantalla del blog o website dentro de los issues busca los que tengan el prefijo `[DEV] - ` ya que estos corresponden al desarrollo de dichas plataformas.
 
-## Los omponentes de UI
+## Los componentes de UI
 
 El diseño es creado por el equipo organizador de la comunidad, dejamos caer nuestra inspiración en los canvas de figma. [Ver Figma](https://www.figma.com/file/0OwX2E9ex58fR1m0zEqRIR/NodeSchool-SM?node-id=891%3A6)
 
