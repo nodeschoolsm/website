@@ -17,10 +17,6 @@ El diseño es creado por el equipo organizador de la comunidad, dejamos caer nue
 
 Tanto el website cómo el blog tienen componentes comúnes, estos cómponentes son piezas de UI primitivas cómo Botones, Inputs, Burguer, etc.
 
-### Listado necesario a codear
-
-- [Button](./Button.md)
-
 ## Instalando dependencias y arrancando
 
 Para instalar dependencias ejecutamos el comando con el que estamos acostumbrados `install`
@@ -61,8 +57,8 @@ Los componentes que estén en la master del repo son los componentes disponibles
 components/
 |-- Componente/
 |--|-- index.js
-|--|-- index.test.js
-|--|-- index.book.js
+|--|-- Componente.test.js
+|--|-- Componente.book.js
 |--|-- docs.mdx
 ```
 
@@ -72,11 +68,11 @@ components/
 
 Dónde vivel el código a elaborar para dicho componente.
 
-**index.test.js**
+**Componente.test.js**
 
 En caso exista un test para dicho componente pedimos lo nombres de esta manera, ten en cuenta que no es necesario incluir el archivo .test.js y puedes hacer omisión de este.
 
-**index.book.js**
+**Componente.book.js**
 
 El archivo para mostrar el componente en Storybook, es necesario para visualizar y hacer pruebas del componente antes de aprobarlo.
 
@@ -117,3 +113,4 @@ Instalar plugins cómo ESLint , Prettier y Jest.
 - [How to write stories](https://storybook.js.org/docs/react/writing-stories/introduction)
 - [TailwindCSS - Get Started](https://tailwindcss.com/docs/installation)
 - [Configuring ESLint](https://eslint.org/docs/2.13.1/user-guide/configuring)
+- [Component de ejemplo](https://github.com/nodeschoolsm/website/tree/master/components/ExampleComponent)
