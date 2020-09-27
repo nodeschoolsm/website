@@ -18,7 +18,8 @@ module.exports = {
     eqeqeq: ["warn", "smart"],
     "space-before-function-paren": ["error", "never"],
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": [1]
+    "react/prop-types": ["warn"],
+    "react/no-unescaped-entities": ["off"]
   },
   settings: {
     react: {

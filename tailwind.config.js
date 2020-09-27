@@ -40,6 +40,8 @@ module.exports = {
       }
     },
     colors: {
+      white: "#fff",
+      black: "#000",
       dark,
       light,
       transparent: "transparent",
