@@ -92,7 +92,7 @@ Cómo framework JS se usa [NextJS](https://nextjs.org/)
 
 Para hacer tests se recomienda [Jest](https://jestjs.io/) y además se promueve la elaboración de tests unitarios en el desarrollo del website más no es un **must** hacer dichos tests.
 
-Para promover una guia de estilo y tener código consistente se usa [ESLint](https://eslint.org/). [Ver configuración](https://github.com/nodeschoolsm/website/blob/master/.eslintrc.js)
+Para promover una guia de estilo y tener código consistente se usa [ESLint](https://eslint.org/). [Ver la configuración del website](https://github.com/nodeschoolsm/website/blob/master/.eslintrc.js), si tienes sugerencias de cambios a la configuración del linter, no dudes en mencionarla.
 
 Para formatear el código respetando la guía de estilos configurada para el linter se usa Prettier, puedes [ver acá el archivo de configuración](https://github.com/nodeschoolsm/website/blob/master/.prettierrc)
 
@@ -102,7 +102,7 @@ El repo tiene husky, en cada commit que realices ejecutará un lint aplicando la
 
 ## Haciendo PR
 
-Para los PR no existe una template por el momento, lo que si es necesario es agregar un prefijo correspondiente del cambio que se gusta integrar, por ejemplo si es para agregar componentes el prefijo `[BOOK]` , para desarrollo en general `[DEV]`.
+Para los PR no existe una template por el momento, lo que si es necesario es agregar un prefijo correspondiente del cambio que se gusta integrar, por ejemplo si es para agregar componentes el prefijo `BOOK/**` , para desarrollo en general `DEV/**`.
 
 De ahí las siempre recomendadas prácticas de hacer commits continuamente, dejar mensajes claros y concisos de que se está agregando y lo más importante,... no tener miedo, dejá llegar tu PR, si te equivocaste, para aprender se hacen las cosas :' )
 
@@ -111,3 +111,9 @@ De ahí las siempre recomendadas prácticas de hacer commits continuamente, deja
 Una que otra ocación ejecutar `test` y `lint` para autoevaluarnos el hecho de pegarnos a la guía de estilos.
 
 Instalar plugins cómo ESLint , Prettier y Jest.
+
+## Lecturas
+
+- [How to write stories](https://storybook.js.org/docs/react/writing-stories/introduction)
+- [TailwindCSS - Get Started](https://tailwindcss.com/docs/installation)
+- [Configuring ESLint](https://eslint.org/docs/2.13.1/user-guide/configuring)

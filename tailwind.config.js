@@ -26,7 +26,12 @@ Object.keys(pallete).map((color) => {
   boxShadow[color] = `0 0 0 3px ${value}33`
 })
 module.exports = {
-  purge: ["./pages/**/*.js", "./pages/*.js", "./components/**/*.js"],
+  purge: [
+    "./pages/**/*.js",
+    "./pages/*.js",
+    "./components/**/*.js",
+    "./components/**/*.mdx"
+  ],
   theme: {
     extend: {
       width: pxHelpers,
@@ -40,6 +45,8 @@ module.exports = {
       }
     },
     colors: {
+      white: "#fff",
+      black: "#000",
       dark,
       light,
       transparent: "transparent",

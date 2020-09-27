@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Matches snapshot 1`] = `
+<div
+  className="w-full "
+>
+  <div
+    className="text-xs font-poppins text-black "
+  >
+    three
+  </div>
+  <input
+    className="border-dark-15 bg-transparent font-poppins border-b-2 px-4 py-2 w-full "
+    onChange={[Function]}
+    placeholder="two"
+    type="text"
+    value="one"
+  />
+</div>
+`;
