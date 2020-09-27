@@ -16,19 +16,14 @@ export default {
   argTypes: { onChange: { action: "onChange" } }
 }
 
-export const Light = (args) => <Input {...args} />
-
-export const Dark = (args) => <Input.Dark {...args} />
-Dark.parameters = {
-  backgrounds: { default: "dark" }
-}
-
-export const InputLight = (args) => <Input.Light {...args} />
-InputLight.storyName = "Input.Light"
+export const Default = (args) => <Input {...args} />
 
 export const InputDark = (args) => <Input.Dark {...args} />
 InputDark.storyName = "Input.Dark"
-InputDark.parameters = {
+
+export const InputLight = (args) => <Input.Light {...args} />
+InputLight.storyName = "Input.Light"
+InputLight.parameters = {
   backgrounds: { default: "dark" }
 }
 
@@ -38,7 +33,9 @@ export const WithPlaceholder = (args) => (
   <Input placeholder="Escribe Átomico" {...args} />
 )
 
-export const DarkWithLabelAndPlaceholder = (args) => <Input.Dark placeholder="123-321" label="Sup!" {...args} />
-DarkWithLabelAndPlaceholder.parameters = {
+export const LightWithLabelAndPlaceholder = (args) => (
+  <Input.Light placeholder="123-321" label="Sup!" {...args} />
+)
+LightWithLabelAndPlaceholder.parameters = {
   backgrounds: { default: "dark" }
 }

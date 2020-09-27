@@ -60,8 +60,8 @@ function Light(props) {
     <Template
       {...props}
       theme={{
-        label: "text-black",
-        input: "border-dark-15"
+        label: "text-white",
+        input: "border-light-15 text-white"
       }}
     />
   )
@@ -77,8 +77,8 @@ function Dark(props) {
     <Template
       {...props}
       theme={{
-        label: "text-white",
-        input: "border-light-15 text-white"
+        label: "text-black",
+        input: "border-dark-15"
       }}
     />
   )
@@ -86,11 +86,11 @@ function Dark(props) {
 Dark.propTypes = propTypes
 
 /**
- * Light flavor Input
+ * Dark flavor Input
  * @param { Input } props
  */
 function Input(props) {
-  return <Light {...props} />
+  return <Dark {...props} />
 }
 
 Input.Light = Light

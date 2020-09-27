@@ -1,1 +1,43 @@
+import Input from "./index"
+
 # Input Component
+
+## Cómo usar
+
+El componente input por default retorna el Sabor, `Dark`
+
+<div className="bg-white p-4">
+  <Input value="Alo" />
+</div>
+
+También esta el sablr `Light`
+
+<div className="bg-black p-4">
+  <Input.Light value="Alo" />
+</div>
+
+```js
+<Input.Light value="Alo" />
+```
+
+Puedes agregar onChange controller, también puedes controlar el value del valor con la prop `value`,
+puedes agregar clases personalizadas al contenedor, label y input del componente.
+
+## Importando el componente
+
+```js
+import Input from "../components/Input"
+// Desde pages/index
+```
+
+```js
+import Input from "@components/Input"
+// Con path aliases
+```
+
+## Sabores (Flavors/Types)
+
+```js
+<Input.Dark/>
+<Input.Light/>
+```
