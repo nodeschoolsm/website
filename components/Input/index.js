@@ -3,12 +3,15 @@ import types from "prop-types"
 /**
  * @typedef Input
  * @property { (text: String) => null } onChange - onChange handler callbacks with `.value`
+ * @property { String } label - The input label, defaults to "Digita algo"
  * @property { String } className - Extra className for <input/>
  * @property { String } labelClassName - Extra className for label
  * @property { String } containerClassName - Extra className for input container
  * @property { String? } value - Controlled component value
  */
 const propTypes = {
+  label: types.string,
+  placeholder: types.string,
   className: types.string,
   labelClassName: types.string,
   containerClassName: types.string,
@@ -16,6 +19,8 @@ const propTypes = {
   value: types.string
 }
 const Template = ({
+  label = "Digita algo",
+  placeholder = "Digita algo...",
   className = "",
   labelClassName = "",
   containerClassName = "",
@@ -26,11 +31,11 @@ const Template = ({
   return (
     <div className={`w-full ${containerClassName}`}>
       <div className={`text-xs font-poppins ${theme.label} ${labelClassName}`}>
-        Digita algo
+        {label}
       </div>
       <input
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Digita algo..."
+        placeholder={placeholder}
         type="text"
         value={value}
         className={`${theme.input} bg-transparent font-poppins border-b-2 px-4 py-2 w-full ${className}`}
@@ -61,6 +66,8 @@ function Light(props) {
     />
   )
 }
+Light.propTypes = propTypes
+
 /**
  * Dark flavor Input
  * @param { Input } props
@@ -76,6 +83,8 @@ function Dark(props) {
     />
   )
 }
+Dark.propTypes = propTypes
+
 /**
  * Light flavor Input
  * @param { Input } props

@@ -31,3 +31,14 @@ InputDark.storyName = "Input.Dark"
 InputDark.parameters = {
   backgrounds: { default: "dark" }
 }
+
+export const WithLabel = (args) => <Input label="Custom label" {...args} />
+
+export const WithPlaceholder = (args) => (
+  <Input placeholder="Escribe Átomico" {...args} />
+)
+
+export const DarkWithLabelAndPlaceholder = (args) => <Input.Dark placeholder="123-321" label="Sup!" {...args} />
+DarkWithLabelAndPlaceholder.parameters = {
+  backgrounds: { default: "dark" }
+}
