@@ -8,14 +8,18 @@ assignees: D3Portillo
 
 ---
 
-**Notes/Feedback:**
+## Sobre el issue
 
-**Recursos/Resources:**
+## Resultado esperado
+
+## Recursos y assets
 
 ## Todo
 
 - [ ] Subtask 1
 - [x] Subtask 2
+
+Quizá pueda ayudar: https://github.com/nodeschoolsm/website/tree/master/docs
 
 ---
 Include any subtask you will be doing to complete this track task, so anyone reading this can contribute too, follow this examples:
